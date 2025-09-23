@@ -3,20 +3,38 @@ project:
   output-dir: docs
 
 website:
-  title: "gfyi1026.github.io"
+  title: "Guy Fuchs"
   navbar:
-    left:
+    right:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: about.qmd
+        text: About Me
+      - text: Data Viz
+        menu:
+          - href: premierleague.qmd
+            text: Premier League 2021–22
+          - href: olympics.qmd
+            text: Olympic Athletes and Medals 1896-2016
+
+  page-footer:
+    center:
+      - text: "GitHub Repo"
+        href: https://github.com/gfyi1026/gfyi1026.github.io
+      - text: "Email"
+        href: mailto:gfyi2023@mymail.pomona.edu
 
 format:
   html:
     theme:
-      - cosmo
-      - brand
-    css: styles.css
+      light: minty
+      dark: solar
     toc: true
+    page-layout: full
+    css: styles.css
+    
+execute:
+  warning: false
+  message: false
 
 editor: visual
-

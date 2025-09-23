@@ -1,0 +1,37 @@
+---
+title: "Olympics Athletes and Medals"
+description: |
+  Analysis of Olympic Athletes and Medals Data 1896-2016 from TidyTuesday
+author: "Guy Fuchs"
+date: today
+format: html
+execute:
+  warning: false
+  message: false
+---
+
+> Dataset page: [TidyTuesday: Olympics 2024-08-06](https://github.com/rfordatascience/tidytuesday/tree/main/data/2024/2024-08-06)  
+> Original source: [120 Years of Olympic History on Kaggle](https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results/)
+
+```{r}
+library(tidyverse)
+library(tidytuesdayR)
+
+olympics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-06/olympics.csv')
+
+medals_by_year <- olympics |>
+  filter(!is.na(medal)) |>
+  group_by(year) |>
+  summarise(n_medals = n())
+  
+ggplot(medals_by_year, aes(x = year, y = n_medals)) +
+  geom_col(fill = "blue") +
+  labs(
+    title = "Number of Recorded Medals by Year",
+    x = "Olympic Year",
+    y = "Medal Count",
+    caption = "Source: TidyTuesday 2024-08-06, Kaggle 120 Years of Olympic History"
+  )
+```
+
+

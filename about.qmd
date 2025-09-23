@@ -4,6 +4,8 @@ title: "About"
 
 About this site
 
+This is me playing around with R and my website
+
 ```{r}
 1 + 1
 ```

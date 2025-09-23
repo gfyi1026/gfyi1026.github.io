@@ -2,15 +2,29 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "gfyi1026.github.io",
+    "title": "Guy Fuchs",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "Hi there, my name is Guy Fuchs and I am a junior at Pomona College studying computer science and physics. I also play on the soccer team here, and love traveling.\n\n1 + 1\n\n[1] 2"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "About this site\nThis is me playing around with R and my website\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "premierleague.html",
+    "href": "premierleague.html",
+    "title": "Premier League 2021–22",
+    "section": "",
+    "text": "Dataset page: TidyTuesday: Premier League Match Data\nOriginal source: Premier League (from Evan Gower on Kaggle)\n\n\nlibrary(tidyverse)\nlibrary(tidytuesdayR)\n\nsoccer &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2023/2023-04-04/soccer21-22.csv')\n\nteam_goals &lt;- soccer |&gt;\n  group_by(HomeTeam) |&gt;\n  summarise(avg_goals = mean(FTHG, na.rm = TRUE))\n\nggplot(team_goals, aes(x = HomeTeam, y = avg_goals)) +\n  geom_col(fill = \"blue\") +\n  labs(\n    title = \"Average Home Goals per Match by Team (2021–22)\",\n    x = \"Team\",\n    y = \"Average Goals\",\n    caption = \"Source: TidyTuesday 2023-04-04, Premier League 2021–22\"\n  ) +\n  theme(axis.text.x = element_text(angle = 45, hjust = 1))"
+  },
+  {
+    "objectID": "olympics.html",
+    "href": "olympics.html",
+    "title": "Olympics Athletes and Medals",
+    "section": "",
+    "text": "Dataset page: TidyTuesday: Olympics 2024-08-06\nOriginal source: 120 Years of Olympic History on Kaggle\n\n\nlibrary(tidyverse)\nlibrary(tidytuesdayR)\n\nolympics &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-06/olympics.csv')\n\nmedals_by_year &lt;- olympics |&gt;\n  filter(!is.na(medal)) |&gt;\n  group_by(year) |&gt;\n  summarise(n_medals = n())\n  \nggplot(medals_by_year, aes(x = year, y = n_medals)) +\n  geom_col(fill = \"blue\") +\n  labs(\n    title = \"Number of Recorded Medals by Year\",\n    x = \"Olympic Year\",\n    y = \"Medal Count\",\n    caption = \"Source: TidyTuesday 2024-08-06, Kaggle 120 Years of Olympic History\"\n  )"
   }
 ]

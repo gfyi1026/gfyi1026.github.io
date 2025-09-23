@@ -1,10 +1,21 @@
 ---
-title: "gfyi1026.github.io"
+title: "Guy Fuchs"
+image: images/Guy_headshot.jpg
+toc: false
+about: 
+  template: jolla
+  image-shape: rectangle
+  image-width: 17em
+  links:
+    - text: LinkedIn
+      href: https://www.linkedin.com/in/guy-fuchs-20a06932a/
+    - text: GitHub
+      href: https://github.com/gfyi1026/gfyi1026.github.io
+    - text: Email
+      href: mailto:gfyi2023@mymail.pomona.edu
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Hi there, my name is Guy Fuchs and I am a junior at Pomona College studying computer science and physics. I also play on the soccer team here, and love traveling.
 
 ```{r}
 1 + 1

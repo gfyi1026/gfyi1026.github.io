@@ -1,0 +1,38 @@
+---
+title: "Premier League 2021–22"
+description: |
+  Analysis of Premier League Match Data 2021–22 from TidyTuesday
+author: "Guy Fuchs"
+date: today
+format: html
+execute:
+  warning: false
+  message: false
+---
+
+> Dataset page: [TidyTuesday: Premier League Match Data](https://github.com/rfordatascience/tidytuesday/tree/main/data/2023/2023-04-04)  
+> Original source: [Premier League (from Evan Gower on Kaggle)](https://www.kaggle.com/datasets/evangower/premier-league-match-data)
+
+```{r}
+library(tidyverse)
+library(tidytuesdayR)
+
+soccer <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2023/2023-04-04/soccer21-22.csv')
+
+team_goals <- soccer |>
+  group_by(HomeTeam) |>
+  summarise(avg_goals = mean(FTHG, na.rm = TRUE))
+
+ggplot(team_goals, aes(x = HomeTeam, y = avg_goals)) +
+  geom_col(fill = "blue") +
+  labs(
+    title = "Average Home Goals per Match by Team (2021–22)",
+    x = "Team",
+    y = "Average Goals",
+    caption = "Source: TidyTuesday 2023-04-04, Premier League 2021–22"
+  ) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+
