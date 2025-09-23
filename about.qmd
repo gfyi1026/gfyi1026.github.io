@@ -2,7 +2,7 @@
 title: "About"
 ---
 
-About this site
+This is my first project for my intro to data science class.
 
 This is me playing around with R and my website
 

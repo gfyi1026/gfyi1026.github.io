@@ -16,7 +16,3 @@ about:
 ---
 
 Hi there, my name is Guy Fuchs and I am a junior at Pomona College studying computer science and physics. I also play on the soccer team here, and love traveling.
-
-```{r}
-1 + 1
-```
