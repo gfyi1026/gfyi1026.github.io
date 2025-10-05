@@ -25,7 +25,7 @@
     "href": "olympics.html",
     "title": "Olympics Athletes and Medals",
     "section": "",
-    "text": "Dataset page: TidyTuesday: Olympics 2024-08-06\nOriginal source: 120 Years of Olympic History on Kaggle\n\n\nlibrary(tidyverse)\nlibrary(tidytuesdayR)\n\nolympics &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-06/olympics.csv')\n\nmedals_by_year &lt;- olympics |&gt;\n  filter(!is.na(medal)) |&gt;\n  group_by(year) |&gt;\n  summarise(n_medals = n())\n  \nggplot(medals_by_year, aes(x = year, y = n_medals)) +\n  geom_col(fill = \"blue\") +\n  labs(\n    title = \"Number of Recorded Medals by Year\",\n    x = \"Olympic Year\",\n    y = \"Medal Count\",\n    caption = \"Source: TidyTuesday 2024-08-06, Kaggle 120 Years of Olympic History\"\n  )"
+    "text": "Dataset page: TidyTuesday: Olympics 2024-08-06\nOriginal source: Sports-Reference.com Olympic History Project\n\n\nlibrary(tidyverse)\nlibrary(tidytuesdayR)\n\nolympics &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-06/olympics.csv')\n\nmedals_by_year &lt;- olympics |&gt;\n  filter(!is.na(medal)) |&gt;\n  group_by(year) |&gt;\n  summarise(n_medals = n())\n  \nggplot(medals_by_year, aes(x = year, y = n_medals)) +\n  geom_col(fill = \"blue\") +\n  labs(\n    title = \"Number of Recorded Medals by Year\",\n    x = \"Olympic Year\",\n    y = \"Medal Count\",\n    caption = \"Source: TidyTuesday 2024-08-06, Kaggle 120 Years of Olympic History\"\n  )"
   },
   {
     "objectID": "kidzbop.html",
