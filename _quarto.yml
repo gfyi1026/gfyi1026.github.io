@@ -16,6 +16,8 @@ website:
             text: Premier League 2021–22
           - href: olympics.qmd
             text: Olympic Athletes and Medals 1896-2016
+      - href: kidzbop.qmd
+        text: Kidz Bop Analysis
 
   page-footer:
     center:
