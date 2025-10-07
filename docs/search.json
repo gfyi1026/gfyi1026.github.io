@@ -18,7 +18,7 @@
     "href": "premierleague.html",
     "title": "Premier League 2021–22",
     "section": "",
-    "text": "Dataset page: TidyTuesday: Premier League Match Data\nOriginal source: Premier League (from Evan Gower on Kaggle)\n\n\nlibrary(tidyverse)\nlibrary(tidytuesdayR)\n\nsoccer &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2023/2023-04-04/soccer21-22.csv')\n\nteam_goals &lt;- soccer |&gt;\n  group_by(HomeTeam) |&gt;\n  summarise(avg_goals = mean(FTHG, na.rm = TRUE))\n\nggplot(team_goals, aes(x = HomeTeam, y = avg_goals)) +\n  geom_col(fill = \"blue\") +\n  labs(\n    title = \"Average Home Goals per Match by Team (2021–22)\",\n    x = \"Team\",\n    y = \"Average Goals\",\n    caption = \"Source: TidyTuesday 2023-04-04, Premier League 2021–22\"\n  ) +\n  theme(axis.text.x = element_text(angle = 45, hjust = 1))"
+    "text": "Dataset page: TidyTuesday: Premier League Match Data\nOriginal source: Official Premier League Statistics\n\n\nlibrary(tidyverse)\nlibrary(tidytuesdayR)\n\nsoccer &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2023/2023-04-04/soccer21-22.csv')\n\nteam_goals &lt;- soccer |&gt;\n  group_by(HomeTeam) |&gt;\n  summarise(avg_goals = mean(FTHG, na.rm = TRUE))\n\nggplot(team_goals, aes(x = HomeTeam, y = avg_goals)) +\n  geom_col(fill = \"blue\") +\n  labs(\n    title = \"Average Home Goals per Match by Team (2021–22)\",\n    x = \"Team\",\n    y = \"Average Goals\",\n    caption = \"Source: TidyTuesday 2023-04-04, Premier League 2021–22\"\n  ) +\n  theme(axis.text.x = element_text(angle = 45, hjust = 1))"
   },
   {
     "objectID": "olympics.html",
