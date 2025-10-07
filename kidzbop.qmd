@@ -17,14 +17,7 @@ execute:
 #| label: setup
 #| code-fold: true
 library(tidyverse)
-library(stringr)
-library(janitor)
-library(lubridate)
-library(parsedate)
 library(scales)
-library(glue)
-library(purrr)
-library(tidytext)
 ```
 
 ```{r}
@@ -91,6 +84,7 @@ by_year <- kb_lower |>
 ggplot(by_year, aes(x = year, y = pct)) +
   geom_line() +
   geom_point() +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   labs(
     title = "Lyrics mentioning relationships over time",
     subtitle = "Share of original lyrics with partner or family terms (years with 20+ rows)",
