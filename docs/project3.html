@@ -213,7 +213,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <blockquote class="blockquote">
-<p>Dataset page: <a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html">R Datasets Package</a> Original source: <a href="https://raw.githubusercontent.com/the-pudding/data/master/kidz-bop/KB_censored-lyrics.csv">Henderson and Velleman (1981), Building Multiple Regression Models Interactively, Biometrics</a></p>
+<p>Dataset page: <a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html">R Datasets Package</a><br>
+Original source: <a href="https://raw.githubusercontent.com/the-pudding/data/master/kidz-bop/KB_censored-lyrics.csv">Henderson and Velleman (1981), Building Multiple Regression Models Interactively, Biometrics</a></p>
 </blockquote>
 <div class="cell">
 <details class="code-fold">
@@ -302,20 +303,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>null_vals <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(<span class="dv">1</span><span class="sc">:</span>B, <span class="cf">function</span>(i) <span class="fu">perm_once</span>(cars))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(null_vals <span class="sc">&gt;=</span> obs)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">observed_diff =</span> obs,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_value_one_sided =</span> p_value,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">permutations =</span> B</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>p_value_formatted <span class="ot">&lt;-</span> <span class="fu">format</span>(p_value, <span class="at">scientific =</span> <span class="cn">FALSE</span>, <span class="at">digits =</span> <span class="dv">4</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">observed_diff =</span> obs,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_value_one_sided =</span> p_value_formatted,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">permutations =</span> B</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   observed_diff p_value_one_sided permutations
-          &lt;dbl&gt;             &lt;dbl&gt;        &lt;dbl&gt;
-1          7.24                 0         5000</code></pre>
+          &lt;dbl&gt; &lt;chr&gt;                    &lt;dbl&gt;
+1          7.24 0                         5000</code></pre>
 </div>
 </div>
-<p>For reference, 2e-04 is equivalent to 0.0002.</p>
+<p>The p_value_one_sided is actually equal to 0.0004, but R rounds it down to 0.</p>
 <p>Description of the simulation:</p>
 <p>The simulation works by repeatedly shuffling the transmission labels to represent an environment where there is no true relationship between transmission type and fuel economy (the null hypothesis). - The function mean_diff() calculates the difference in average MPG between manual and automatic cars for any given dataset. - The function perm_once() performs one permutation by randomly reassigning transmission labels and then calling mean_diff() to get a new difference value. - I used map_dbl() to repeat this process 5,000 times, because it provides a fast way to apply the same function many times and store the numeric results in a single vector. This created a simulated null distribution of MPG differences that we can compare the observed difference against to determine how different it is the under the null model.</p>
 <p>Plotting the null distribution:</p>
@@ -340,7 +342,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>This histogram shows the null distribution of differences in mean MPG between manual and automatic cars, created by randomly shuffling the transmission labels 5,000 times. The x-axis represents the simulated differences under the null hypothesis of no relationship between transmission and MPG, with the y-axis showing how often each difference occurred. The dashed vertical line marks the observed difference from the real data, which was about 7.24 MPG. This observed value lies far to the right of all simulated values, and thus suggests that such a large difference would be extremely unlikely if transmission had no effect on fuel economy.</p>
 <p>To conclude:</p>
-<p>In this analysis, I conducted a permutation test to determine whether cars with manual transmission have higher fuel economy, MPG, than cars with automatic transmission in the “mtcars” dataset. I computed the observed difference in mean MPG and then simulated the null hypothesis by repeatedly shuffling transmission labels and recalculating the mean difference 5,000 times. The resulting null distribution was centered around 0, while the observed difference (7.24 MPG) was far outside this range, giving a p-value less than 0.01. This indicated that it is highly unlikely the difference in MPG occurred by chance, providing very strong evidence against the null model, and ultimately that manual cars are more fuel-efficient on average.</p>
+<p>In this analysis, I conducted a permutation test to determine whether cars with manual transmission have higher fuel economy, MPG, than cars with automatic transmission in the “mtcars” dataset. I computed the observed difference in mean MPG and then simulated the null hypothesis by repeatedly shuffling transmission labels and recalculating the mean difference 5,000 times. The resulting null distribution was centered around 0, while the observed difference (7.24 MPG) was far outside this range, giving a p-value of 0.0004, which is less than 0.01. This indicated that it is highly unlikely the difference in MPG occurred by chance, providing very strong evidence against the null model, and ultimately that manual cars are more fuel-efficient on average.</p>
 
 
 
