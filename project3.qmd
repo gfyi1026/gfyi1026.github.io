@@ -1,0 +1,126 @@
+---
+title: "Simulation Study"
+description: |
+  Analysis of mtcars MPG (Manual vs Automatic)
+author: "Guy Fuchs"
+date: today
+format: html
+execute:
+  warning: false
+  message: false
+---
+
+> Dataset page: [R Datasets Package](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html)
+> Original source: [Henderson and Velleman (1981), Building Multiple Regression Models Interactively, Biometrics](https://raw.githubusercontent.com/the-pudding/data/master/kidz-bop/KB_censored-lyrics.csv)
+
+
+```{r}
+#| label: setup
+#| code-fold: true
+set.seed(47)
+library(tidyverse)
+library(purrr)
+```
+
+I will compare MPG between manual and automatic cars in the build-in "mtcars" dataset. I will compute the observed difference (Manual - Automatic) and then simulate the null hypothesis, being "no relationship", by permuting the transmission labels many times and recomputing the difference. I will report a one-sided p-value and show the null distribution. The main variables we will be dealing with are "mpg" (numerical fuel economy) and "am" (categorical transmission: Automatics vs Manual). This will be interesting to analyze as MPG is a practical measure of efficiency that all drivers understand to be crucial for financial decisions when it comes to purchasing cars, so this simulation will help us understand if the relationship could arise by chance with no true relationship. 
+
+```{r}
+cars <- as_tibble(mtcars, rownames = "model") |>
+  mutate(am = factor(am, c(0,1), labels = c("Automatic", "Manual")))
+cars |>
+  head(n=5)
+```
+
+```{r}
+ggplot(cars, aes(x = am, y = mpg, fill = am)) +
+  geom_boxplot(width = 0.55, alpha = 0.7, outlier.shape = NA) +
+  geom_jitter(width = 0.1) +
+  labs(
+    title = "Fuel economy (MPG) by transmission",
+    x = "Transmission", y = "MPG", fill = "Transmission"
+    ) +
+  theme_minimal()
+
+```
+This boxplot compares fuel economy, MPG, between cars with automatic and manual transmissions in the "mtcars" dataset. In the plot, every dot represents one car, and from the boxplot we can see that manual cars generally have higher MPG than automatic cars, with both a higher median and a wider spread of values. Thus, this suggests that manual transmissions may be more fuel-efficent on average in this dataset.
+
+To visualize the original data:
+```{r}
+cars |>
+  group_by(am) |>
+  summarise(
+    n = n(),
+    mean_mpg = mean(mpg),
+    median_mpg = median(mpg)
+  )
+
+```
+
+Now, for the simulation part:
+
+```{r}
+mean_diff <- function(data){
+  manual_mpg <- mean(data$mpg[data$am == "Manual"])
+  auto_mpg   <- mean(data$mpg[data$am == "Automatic"])
+  return(manual_mpg - auto_mpg)
+}
+
+perm_once <- function(data){
+  data_perm <- data
+  data_perm$am <- sample(data_perm$am)
+  mean_diff(data_perm)
+}
+
+```
+
+
+Observed difference in means:
+```{r}
+obs <- mean_diff(cars)
+obs
+```
+
+Null distribution under "no relationship" and one-side p-value:
+```{r}
+B <- 5000
+null_vals <- map_dbl(1:B, function(i) perm_once(cars))
+p_value <- mean(null_vals >= obs)
+
+tibble(
+  observed_diff = obs,
+  p_value_one_sided = p_value,
+  permutations = B
+)
+```
+For reference, 2e-04 is equivalent to 0.0002.
+
+
+Description of the simulation:
+
+The simulation works by repeatedly shuffling the transmission labels to represent an environment where there is no true relationship between transmission type and fuel economy (the null hypothesis). 
+- The function mean_diff() calculates the difference in average MPG between manual and automatic cars for any given dataset. 
+- The function perm_once() performs one permutation by randomly reassigning transmission labels and then calling mean_diff() to get a new difference value. 
+- I used map_dbl() to repeat this process 5,000 times, because it provides a fast way to apply the same function many times and store the numeric results in a single vector. This created a simulated null distribution of MPG differences that we can compare the observed difference against to determine how different it is the under the null model.
+
+
+
+Plotting the null distribution:
+```{r}
+tibble(null = null_vals) |>
+  ggplot(aes(x = null)) +
+  geom_histogram(bins = 40, alpha = 0.85) +
+  geom_vline(xintercept = obs, linetype = "dashed") +
+  labs(
+    title = "Permutation null for MPG difference (Manual − Automatic)",
+    x = "Null statistic (Manual − Automatic mean MPG)",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+This histogram shows the null distribution of differences in mean MPG between manual and automatic cars, created by randomly shuffling the transmission labels 5,000 times. The x-axis represents the simulated differences under the null hypothesis of no relationship between transmission and MPG, with the y-axis showing how often each difference occurred. The dashed vertical line marks the observed difference from the real data, which was about 7.24 MPG. This observed value lies far to the right of all simulated values, and thus suggests that such a large difference would be extremely unlikely if transmission had no effect on fuel economy. 
+
+
+To conclude:
+
+In this analysis, I conducted a permutation test to determine whether cars with manual transmission have higher fuel economy, MPG, than cars with automatic transmission in the "mtcars" dataset. I computed the observed difference in mean MPG and then simulated the null hypothesis by repeatedly shuffling transmission labels and recalculating the mean difference 5,000 times. The resulting null distribution was centered around 0, while the observed difference (7.24 MPG) was far outside this range, giving a p-value less than 0.01. This indicated that it is highly unlikely the difference in MPG occurred by chance, providing very strong evidence against the null model, and ultimately that manual cars are more fuel-efficient on average. 
+

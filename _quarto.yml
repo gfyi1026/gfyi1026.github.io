@@ -18,6 +18,8 @@ website:
             text: Olympic Athletes and Medals 1896-2016
       - href: kidzbop.qmd
         text: Kidz Bop Analysis
+      - href: project3.qmd
+        text: Simulation Study
 
   page-footer:
     center:
