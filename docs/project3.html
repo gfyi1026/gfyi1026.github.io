@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Guy Fuchs">
-<meta name="dcterms.date" content="2025-10-28">
+<meta name="dcterms.date" content="2025-10-30">
 <meta name="description" content="Analysis of mtcars MPG (Manual vs Automatic)">
 
 <title>Simulation Study – Guy Fuchs</title>
@@ -200,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 28, 2025</p>
+      <p class="date">October 30, 2025</p>
     </div>
   </div>
   
@@ -224,7 +224,7 @@ Original source: <a href="https://raw.githubusercontent.com/the-pudding/data/mas
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>I will compare MPG between manual and automatic cars in the build-in “mtcars” dataset. I will compute the observed difference (Manual - Automatic) and then simulate the null hypothesis, being “no relationship”, by permuting the transmission labels many times and recomputing the difference. I will report a one-sided p-value and show the null distribution. The main variables we will be dealing with are “mpg” (numerical fuel economy) and “am” (categorical transmission: Automatics vs Manual). This will be interesting to analyze as MPG is a practical measure of efficiency that all drivers understand to be crucial for financial decisions when it comes to purchasing cars, so this simulation will help us understand if the relationship could arise by chance with no true relationship.</p>
+<p>I will compare MPG between manual and automatic cars in the build-in “mtcars” dataset. I will compute the observed difference (Manual - Automatic) and then simulate the null hypothesis, being “no relationship”, by permuting the transmission labels many times and recomputing the difference. I will report a one-sided p-value and show the null distribution, where the main variables we will be dealing with are “mpg” (numerical fuel economy) and “am” (categorical transmission: Automatics vs Manual). This will be interesting to analyze as MPG is a practical measure of efficiency that all drivers understand to be crucial for financial decisions when it comes to purchasing cars, so this simulation will help us understand if the relationship could arise by chance with no true relationship.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(mtcars, <span class="at">rownames =</span> <span class="st">"model"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">am =</span> <span class="fu">factor</span>(am, <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Automatic"</span>, <span class="st">"Manual"</span>)))</span>

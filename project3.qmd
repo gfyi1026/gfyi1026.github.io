@@ -22,7 +22,7 @@ library(tidyverse)
 library(purrr)
 ```
 
-I will compare MPG between manual and automatic cars in the build-in "mtcars" dataset. I will compute the observed difference (Manual - Automatic) and then simulate the null hypothesis, being "no relationship", by permuting the transmission labels many times and recomputing the difference. I will report a one-sided p-value and show the null distribution. The main variables we will be dealing with are "mpg" (numerical fuel economy) and "am" (categorical transmission: Automatics vs Manual). This will be interesting to analyze as MPG is a practical measure of efficiency that all drivers understand to be crucial for financial decisions when it comes to purchasing cars, so this simulation will help us understand if the relationship could arise by chance with no true relationship. 
+I will compare MPG between manual and automatic cars in the build-in "mtcars" dataset. I will compute the observed difference (Manual - Automatic) and then simulate the null hypothesis, being "no relationship", by permuting the transmission labels many times and recomputing the difference. I will report a one-sided p-value and show the null distribution, where the main variables we will be dealing with are "mpg" (numerical fuel economy) and "am" (categorical transmission: Automatics vs Manual). This will be interesting to analyze as MPG is a practical measure of efficiency that all drivers understand to be crucial for financial decisions when it comes to purchasing cars, so this simulation will help us understand if the relationship could arise by chance with no true relationship. 
 
 ```{r}
 cars <- as_tibble(mtcars, rownames = "model") |>
