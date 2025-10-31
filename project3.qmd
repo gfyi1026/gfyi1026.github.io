@@ -11,7 +11,7 @@ execute:
 ---
 
 > Dataset page: [R Datasets Package](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html)  
-> Original source: [Henderson and Velleman (1981), Building Multiple Regression Models Interactively, Biometrics](https://raw.githubusercontent.com/the-pudding/data/master/kidz-bop/KB_censored-lyrics.csv)
+> Original source: [Henderson and Velleman (1981), Building Multiple Regression Models Interactively, Biometrics](https://www.jstor.org/stable/2530428?origin=crossref)
 
 
 ```{r}
