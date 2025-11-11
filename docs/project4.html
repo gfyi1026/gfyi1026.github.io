@@ -6,11 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Guy Fuchs">
 <meta name="dcterms.date" content="2025-11-10">
-<meta name="description" content="Analysis of Olympic Athletes and Medals Data 1896-2016 from TidyTuesday">
+<meta name="description" content="Exploring the ethics in criminal-justice risk prediction">
 
-<title>Olympics Athletes and Medals – Guy Fuchs</title>
+<title>Project 4: Ethics - Data and Power — the COMPAS Algorithm – Guy Fuchs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -159,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Simulation Study</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./project4.html"> 
+    <a class="nav-link active" href="./project4.html" aria-current="page"> 
 <span class="menu-text">Ethics - Data and Power</span></a>
   </li>  
 </ul>
@@ -174,32 +139,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#what-is-the-permission-structure-for-using-the-data-and-was-it-followed" id="toc-what-is-the-permission-structure-for-using-the-data-and-was-it-followed" class="nav-link" data-scroll-target="#what-is-the-permission-structure-for-using-the-data-and-was-it-followed">1. What is the permission structure for using the data, and was it followed?</a></li>
+  <li><a href="#who-was-measured-and-are-they-representative-of-the-population-to-whom-the-algorithm-is-applied" id="toc-who-was-measured-and-are-they-representative-of-the-population-to-whom-the-algorithm-is-applied" class="nav-link" data-scroll-target="#who-was-measured-and-are-they-representative-of-the-population-to-whom-the-algorithm-is-applied">2. Who was measured, and are they representative of the population to whom the algorithm is applied?</a></li>
+  <li><a href="#is-the-data-being-used-in-unintended-ways-relative-to-its-original-study" id="toc-is-the-data-being-used-in-unintended-ways-relative-to-its-original-study" class="nav-link" data-scroll-target="#is-the-data-being-used-in-unintended-ways-relative-to-its-original-study">3. Is the data being used in unintended ways relative to its original study?</a></li>
+  <li><a href="#is-the-data-identifiable-or-sufficiently-anonymized" id="toc-is-the-data-identifiable-or-sufficiently-anonymized" class="nav-link" data-scroll-target="#is-the-data-identifiable-or-sufficiently-anonymized">4. Is the data identifiable or sufficiently anonymized?</a></li>
+  <li><a href="#why-it-matters" id="toc-why-it-matters" class="nav-link" data-scroll-target="#why-it-matters">Why it matters</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Olympics Athletes and Medals</h1>
+<h1 class="title">Project 4: Ethics - Data and Power — the COMPAS Algorithm</h1>
 </div>
 
 <div>
   <div class="description">
-    <p>Analysis of Olympic Athletes and Medals Data 1896-2016 from TidyTuesday</p>
+    Exploring the ethics in criminal-justice risk prediction
   </div>
 </div>
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Guy Fuchs </p>
-          </div>
-  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
@@ -216,39 +187,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<blockquote class="blockquote">
-<p>Dataset page: <a href="https://github.com/rfordatascience/tidytuesday/tree/main/data/2024/2024-08-06">TidyTuesday: Olympics 2024-08-06</a><br>
-Original source: <a href="https://www.sports-reference.com/olympics/">Sports-Reference.com Olympic History Project</a></p>
-</blockquote>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytuesdayR)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>olympics <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-06/olympics.csv'</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>medals_by_year <span class="ot">&lt;-</span> olympics <span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(medal)) <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_medals =</span> <span class="fu">n</span>())</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(medals_by_year, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n_medals)) <span class="sc">+</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Number of Recorded Medals by Year"</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Olympic Year"</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Medal Count"</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: TidyTuesday 2024-08-06, Kaggle 120 Years of Olympic History"</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="olympics_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This project examines COMPAS, a risk-assessment algorithm used by courts to estimate the likelihood that a defendant will reoffend. The system relies on historical criminal-justice data and claims to provide an objective measure of risk, in order to assist judges with bail or sentencing decisions. This is done with the hopes of limiting potential future crimes committed by these defendants.</p>
+<p>The ethical dilemma appears when we look at how COMPAS performs across racial groups and how little transparency exists around its design. In 2016, ProPublica published a detailed analysis showing that the tool was more likely to falsely label black defendants as “high risk” while under-estimating risk for white defendants (<em>ProPublica, 2016</em>). Northpointe, which is the company behind COMPAS, disputed those findings by arguing that the model was properly calibrated and that bias appeared because different groups had different base rates of future re-arrest (<em>Northpointe, 2016</em>).</p>
+<p>The tension between these two perspectives reveals the significance of this ethical issue, where an algorithm influences human freedom without open access, independent validation, or clear public understanding of its limitations and set up.</p>
+</section>
+<section id="what-is-the-permission-structure-for-using-the-data-and-was-it-followed" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-the-permission-structure-for-using-the-data-and-was-it-followed">1. What is the permission structure for using the data, and was it followed?</h2>
+<p>COMPAS was licensed to county and state justice departments, giving them permission to use local criminal records and demographic information (<em>Northpointe, 2016</em>). Judges, probation officers, and other officials were allowed to view the risk scores as one input in their decisions regarding the future of defendants. Legally, the data use followed official agreements.</p>
+<p>Ethically, however, the people whose data built and informed the model never consented to those uses (<em>ProPublica, 2016</em>). Historical records of arrests and convictions were reused for predictive modeling without a transparent permission framework or community involvement. The permission structure prioritized institutional efficiency over individual rights or fairness.</p>
+</section>
+<section id="who-was-measured-and-are-they-representative-of-the-population-to-whom-the-algorithm-is-applied" class="level2">
+<h2 class="anchored" data-anchor-id="who-was-measured-and-are-they-representative-of-the-population-to-whom-the-algorithm-is-applied">2. Who was measured, and are they representative of the population to whom the algorithm is applied?</h2>
+<p>According to ProPublica, the model was trained and validated on data from jurisdictions that already show racial disparities in arrests and sentencing (<em>ProPublica, 2016</em>). That means the algorithm ultimately learned patterns shaped by unequal policing. When applied to a broader population, it reproduced those disparities and ultimately showed that black defendants were twice as likely to be incorrectly labeled high risk (<em>ProPublica, 2016</em>).</p>
+<p>Northpointe responded that the model’s predictions were “equally accurate” across groups when measured by calibration, meaning people with the same predicted risk reoffended at similar rates (<em>Northpointe, 2016</em>). Both statements can be true, but they highlight different fairness criteria. The group most measured, which was those already recorded in the justice system, is not necessarily representative of all communities affected by the algorithms decisions.</p>
+</section>
+<section id="is-the-data-being-used-in-unintended-ways-relative-to-its-original-study" class="level2">
+<h2 class="anchored" data-anchor-id="is-the-data-being-used-in-unintended-ways-relative-to-its-original-study">3. Is the data being used in unintended ways relative to its original study?</h2>
+<p>COMPAS was marketed as a decision-support tool, not a strict decision-maker (<em>Northpointe, 2016</em>). However, once embedded in busy court systems, its scores began to influence outcomes directly. Judges and parole boards often treated the risk score as objective evidence, even though the methodology and weighting of variables were private and generally undisclosed (<em>ProPublica, 2016</em>).</p>
+<p>This shift from support to decision substitute is an unintended use that shifts moral responsibility from humans to a an unclear algorithm. Without open auditing or clear guidance, the algorithm’s intended boundaries were crossed without much noise.</p>
+</section>
+<section id="is-the-data-identifiable-or-sufficiently-anonymized" class="level2">
+<h2 class="anchored" data-anchor-id="is-the-data-identifiable-or-sufficiently-anonymized">4. Is the data identifiable or sufficiently anonymized?</h2>
+<p>The individual data used to train COMPAS was not publicly released, but remains highly identifiable inside the justice system (<em>ProPublica, 2016</em>). Each record corresponds to a specific defendant, linked to names, dates, and criminal histories. The algorithm’s secrecy means the public cannot evaluate whether identifiable variables such as race, neighborhood, or prior arrests were directly or indirectly included.</p>
+<p>Because Northpointe treats its model as proprietary, outside researchers cannot confirm whether the data were anonymized at all (<em>Northpointe, 2016</em>), leaving privacy and fairness questions ultimately unresolved.</p>
+</section>
+<section id="why-it-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-it-matters">Why it matters</h2>
+<p>The COMPAS controversy matters because it reveals how power and accountability can shift when decision-making is handed over to algorithmic systems. In the justice system, where every decision carries serious personal consequences, even small biases can have lasting effects on the defendant’s future. When a model like COMPAS produces a “risk score,” that number can shape how judges, prosecutors, and parole boards view a person’s future, which happens often without anyone fully understanding how the score was created.</p>
+<ul>
+<li><strong>Who benefits:</strong> Private vendors like Northpointe gain steady revenue from government contracts, and public agencies can also claim that their decisions are based on “objective” data rather than personal judgment. The appearance of neutrality would be appealing since it suggests consistency and fairness, even when that impression may not match reality.<br>
+</li>
+<li><strong>Who is harmed:</strong> Defendants, especially black defendants, are the ones most affected when the algorithm’s predictions are inaccurate. A higher risk score can mean stricter bail terms, longer sentences, or reduced chances of parole. Since the model is closed to public review, those individuals have no real way to challenge or verify the system that labels them. This results in a frustrating situation where the defendants are unfairly fighting against a biased system, in this case being COMPAS.</li>
+<li><strong>Why it matters ethically:</strong> The use of predictive tools in criminal justice raises deep questions about consent and fairness. These systems often reinforce existing biases rather than correcting them. When technology reinforces social bias under the cover of data-driven objectivity, it shifts power towards institutions that already hold power, and away from the people most impacted by their decisions. True fairness requires visibility and questioning whether efficiency and profit are being prioritized over justice.</li>
+</ul>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Angwin, J., Larson, J., Mattu, S., &amp; Kirchner, L. (2016). <em>Machine Bias: There’s software used across the country to predict future criminals. And it’s biased against Blacks.</em> ProPublica. https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing</p>
+<p>Dieterich, W., Mendoza, C., &amp; Brennan, T. (2016). <em>COMPAS Risk Scales: Demonstrating Accuracy Equity and Predictive Parity.</em> Northpointe. https://go.volarisgroup.com/rs/430-MBX-989/images/ProPublica_Commentary_Final_070616.pdf</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

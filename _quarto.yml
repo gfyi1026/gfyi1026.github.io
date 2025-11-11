@@ -20,6 +20,8 @@ website:
         text: Kidz Bop Analysis
       - href: project3.qmd
         text: Simulation Study
+      - href: project4.qmd
+        text: Ethics - Data and Power
 
   page-footer:
     center:
