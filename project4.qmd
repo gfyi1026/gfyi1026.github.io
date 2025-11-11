@@ -1,6 +1,6 @@
 ---
-title: "Project 4: Ethics - Data and Power — the COMPAS Algorithm"
-description: "Exploring the ethics in criminal-justice risk prediction"
+title: "Project 4: Ethics - Data and Power - the COMPAS Algorithm"
+description: "Analyzing the ethics in criminal risk prediction"
 date: 2025-11-10
 ---
 

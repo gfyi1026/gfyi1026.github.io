@@ -23,56 +23,56 @@
   {
     "objectID": "project4.html",
     "href": "project4.html",
-    "title": "Project 4: Ethics - Data and Power — the COMPAS Algorithm",
+    "title": "Project 4: Ethics - Data and Power - the COMPAS Algorithm",
     "section": "",
     "text": "This project examines COMPAS, a risk-assessment algorithm used by courts to estimate the likelihood that a defendant will reoffend. The system relies on historical criminal-justice data and claims to provide an objective measure of risk, in order to assist judges with bail or sentencing decisions. This is done with the hopes of limiting potential future crimes committed by these defendants.\nThe ethical dilemma appears when we look at how COMPAS performs across racial groups and how little transparency exists around its design. In 2016, ProPublica published a detailed analysis showing that the tool was more likely to falsely label black defendants as “high risk” while under-estimating risk for white defendants (ProPublica, 2016). Northpointe, which is the company behind COMPAS, disputed those findings by arguing that the model was properly calibrated and that bias appeared because different groups had different base rates of future re-arrest (Northpointe, 2016).\nThe tension between these two perspectives reveals the significance of this ethical issue, where an algorithm influences human freedom without open access, independent validation, or clear public understanding of its limitations and set up."
   },
   {
     "objectID": "project4.html#overview",
     "href": "project4.html#overview",
-    "title": "Project 4: Ethics - Data and Power — the COMPAS Algorithm",
+    "title": "Project 4: Ethics - Data and Power - the COMPAS Algorithm",
     "section": "",
     "text": "This project examines COMPAS, a risk-assessment algorithm used by courts to estimate the likelihood that a defendant will reoffend. The system relies on historical criminal-justice data and claims to provide an objective measure of risk, in order to assist judges with bail or sentencing decisions. This is done with the hopes of limiting potential future crimes committed by these defendants.\nThe ethical dilemma appears when we look at how COMPAS performs across racial groups and how little transparency exists around its design. In 2016, ProPublica published a detailed analysis showing that the tool was more likely to falsely label black defendants as “high risk” while under-estimating risk for white defendants (ProPublica, 2016). Northpointe, which is the company behind COMPAS, disputed those findings by arguing that the model was properly calibrated and that bias appeared because different groups had different base rates of future re-arrest (Northpointe, 2016).\nThe tension between these two perspectives reveals the significance of this ethical issue, where an algorithm influences human freedom without open access, independent validation, or clear public understanding of its limitations and set up."
   },
   {
     "objectID": "project4.html#what-is-the-permission-structure-for-using-the-data-and-was-it-followed",
     "href": "project4.html#what-is-the-permission-structure-for-using-the-data-and-was-it-followed",
-    "title": "Project 4: Ethics - Data and Power — the COMPAS Algorithm",
+    "title": "Project 4: Ethics - Data and Power - the COMPAS Algorithm",
     "section": "1. What is the permission structure for using the data, and was it followed?",
     "text": "1. What is the permission structure for using the data, and was it followed?\nCOMPAS was licensed to county and state justice departments, giving them permission to use local criminal records and demographic information (Northpointe, 2016). Judges, probation officers, and other officials were allowed to view the risk scores as one input in their decisions regarding the future of defendants. Legally, the data use followed official agreements.\nEthically, however, the people whose data built and informed the model never consented to those uses (ProPublica, 2016). Historical records of arrests and convictions were reused for predictive modeling without a transparent permission framework or community involvement. The permission structure prioritized institutional efficiency over individual rights or fairness."
   },
   {
     "objectID": "project4.html#who-was-measured-and-are-they-representative-of-the-population-to-whom-the-algorithm-is-applied",
     "href": "project4.html#who-was-measured-and-are-they-representative-of-the-population-to-whom-the-algorithm-is-applied",
-    "title": "Project 4: Ethics - Data and Power — the COMPAS Algorithm",
+    "title": "Project 4: Ethics - Data and Power - the COMPAS Algorithm",
     "section": "2. Who was measured, and are they representative of the population to whom the algorithm is applied?",
     "text": "2. Who was measured, and are they representative of the population to whom the algorithm is applied?\nAccording to ProPublica, the model was trained and validated on data from jurisdictions that already show racial disparities in arrests and sentencing (ProPublica, 2016). That means the algorithm ultimately learned patterns shaped by unequal policing. When applied to a broader population, it reproduced those disparities and ultimately showed that black defendants were twice as likely to be incorrectly labeled high risk (ProPublica, 2016).\nNorthpointe responded that the model’s predictions were “equally accurate” across groups when measured by calibration, meaning people with the same predicted risk reoffended at similar rates (Northpointe, 2016). Both statements can be true, but they highlight different fairness criteria. The group most measured, which was those already recorded in the justice system, is not necessarily representative of all communities affected by the algorithms decisions."
   },
   {
     "objectID": "project4.html#is-the-data-being-used-in-unintended-ways-relative-to-its-original-study",
     "href": "project4.html#is-the-data-being-used-in-unintended-ways-relative-to-its-original-study",
-    "title": "Project 4: Ethics - Data and Power — the COMPAS Algorithm",
+    "title": "Project 4: Ethics - Data and Power - the COMPAS Algorithm",
     "section": "3. Is the data being used in unintended ways relative to its original study?",
     "text": "3. Is the data being used in unintended ways relative to its original study?\nCOMPAS was marketed as a decision-support tool, not a strict decision-maker (Northpointe, 2016). However, once embedded in busy court systems, its scores began to influence outcomes directly. Judges and parole boards often treated the risk score as objective evidence, even though the methodology and weighting of variables were private and generally undisclosed (ProPublica, 2016).\nThis shift from support to decision substitute is an unintended use that shifts moral responsibility from humans to a an unclear algorithm. Without open auditing or clear guidance, the algorithm’s intended boundaries were crossed without much noise."
   },
   {
     "objectID": "project4.html#is-the-data-identifiable-or-sufficiently-anonymized",
     "href": "project4.html#is-the-data-identifiable-or-sufficiently-anonymized",
-    "title": "Project 4: Ethics - Data and Power — the COMPAS Algorithm",
+    "title": "Project 4: Ethics - Data and Power - the COMPAS Algorithm",
     "section": "4. Is the data identifiable or sufficiently anonymized?",
     "text": "4. Is the data identifiable or sufficiently anonymized?\nThe individual data used to train COMPAS was not publicly released, but remains highly identifiable inside the justice system (ProPublica, 2016). Each record corresponds to a specific defendant, linked to names, dates, and criminal histories. The algorithm’s secrecy means the public cannot evaluate whether identifiable variables such as race, neighborhood, or prior arrests were directly or indirectly included.\nBecause Northpointe treats its model as proprietary, outside researchers cannot confirm whether the data were anonymized at all (Northpointe, 2016), leaving privacy and fairness questions ultimately unresolved."
   },
   {
     "objectID": "project4.html#why-it-matters",
     "href": "project4.html#why-it-matters",
-    "title": "Project 4: Ethics - Data and Power — the COMPAS Algorithm",
+    "title": "Project 4: Ethics - Data and Power - the COMPAS Algorithm",
     "section": "Why it matters",
     "text": "Why it matters\nThe COMPAS controversy matters because it reveals how power and accountability can shift when decision-making is handed over to algorithmic systems. In the justice system, where every decision carries serious personal consequences, even small biases can have lasting effects on the defendant’s future. When a model like COMPAS produces a “risk score,” that number can shape how judges, prosecutors, and parole boards view a person’s future, which happens often without anyone fully understanding how the score was created.\n\nWho benefits: Private vendors like Northpointe gain steady revenue from government contracts, and public agencies can also claim that their decisions are based on “objective” data rather than personal judgment. The appearance of neutrality would be appealing since it suggests consistency and fairness, even when that impression may not match reality.\n\nWho is harmed: Defendants, especially black defendants, are the ones most affected when the algorithm’s predictions are inaccurate. A higher risk score can mean stricter bail terms, longer sentences, or reduced chances of parole. Since the model is closed to public review, those individuals have no real way to challenge or verify the system that labels them. This results in a frustrating situation where the defendants are unfairly fighting against a biased system, in this case being COMPAS.\nWhy it matters ethically: The use of predictive tools in criminal justice raises deep questions about consent and fairness. These systems often reinforce existing biases rather than correcting them. When technology reinforces social bias under the cover of data-driven objectivity, it shifts power towards institutions that already hold power, and away from the people most impacted by their decisions. True fairness requires visibility and questioning whether efficiency and profit are being prioritized over justice."
   },
   {
     "objectID": "project4.html#references",
     "href": "project4.html#references",
-    "title": "Project 4: Ethics - Data and Power — the COMPAS Algorithm",
+    "title": "Project 4: Ethics - Data and Power - the COMPAS Algorithm",
     "section": "References",
     "text": "References\nAngwin, J., Larson, J., Mattu, S., & Kirchner, L. (2016). Machine Bias: There’s software used across the country to predict future criminals. And it’s biased against Blacks. ProPublica. https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing\nDieterich, W., Mendoza, C., & Brennan, T. (2016). COMPAS Risk Scales: Demonstrating Accuracy Equity and Predictive Parity. Northpointe. https://go.volarisgroup.com/rs/430-MBX-989/images/ProPublica_Commentary_Final_070616.pdf"
   },
