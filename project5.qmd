@@ -250,7 +250,7 @@ This 2014 table gives a simple view of how many stops involved each racial group
 
 ## Third Query
 
-For my last query, I am going to be observing the search rates by race across the same three cities, Long Beach, Mesa, and San Jose, for 2014-2016. I am going to compare and try to understand whether searches happen at different rates for different groups.
+For my last query, I am going to be observing the citation rates by race across the same three cities, Long Beach, Mesa, and San Jose, for 2014-2016. I am going to compare and try to understand whether searches happen at different rates for different groups.
 
 
 ```{sql connection=con_traffic, output.var="citation_rates", results="hide"}
