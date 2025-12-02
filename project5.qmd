@@ -314,7 +314,7 @@ ggplot(citation_rates, aes(x = subject_race, y = citation_rate, fill = city)) +
   )
 ```
 
-This plot compares citation rates by race for Long Beach, Mesa, and San Jose between 2014 and 2016. For each racial group, the bars show the proportion of stops that resulted in a citation in each city. Long Beach and Mesa both show citation rates at or near 100 percent for all groups, which suggests that these datasets mainly contain stops where a citation was issued. However, San Jose has much lower citation rates at around a quarter of stops, with only modest differences across racial groups. This highlights that the differences in citation rates are driven not only by variation across cities, but also by differences in how the underlying agencies record their stops. It is unlikely that San Jose is issuing significantly fewer citations in practice, but rather more likely that their data includes a broader range of stop outcomes than those reported by Long Beach and Mesa.
+This plot compares citation rates by race for Long Beach, Mesa, and San Jose between 2014 and 2016. For each racial group, the bars show the proportion of stops that resulted in a citation in each city. What we learn from this query is that Long Beach and Mesa both show citation rates at or near 100 percent for all groups, which suggests that these datasets mainly contain stops where a citation was issued. However, San Jose has much lower citation rates at around a quarter of stops, with only modest differences across racial groups, not enough of a difference to draw a firm conclusion. This highlights that the differences in citation rates are driven not only by variation across cities, but also by differences in how the underlying agencies record their stops. It is unlikely that San Jose is issuing significantly fewer citations in practice, but rather more likely that their data includes a broader range of stop outcomes than those reported by Long Beach and Mesa.
 
 
 ```{sql connection=con_traffic}
@@ -350,13 +350,15 @@ ORDER BY
 
 This 2014 table gives a compact summary of how many citations were issued in each city and what share of all stops resulted in a citation. It provides a single-year snapshot that makes it easy to compare how common citations were across the three cities.
 
+```{r}
+DBI::dbDisconnect(con_traffic)
+```
+
 ## Conclusion
 
 To conclude, in this project I used SQL to pull and wrangle traffic stop data for Long Beach, Mesa, and San Jose from the Stanford Open Policing Project. I first combined the three city tables to track pedestrian and vehicular stops over time, then summarized the racial composition of stops by city and stop type, and finally compared citation rates across race and city. For each step I relied on SQL for all of the data wrangling and used R only to turn the summarized results into plots. I chose not to display the full output tables from the large queries that feed the plots, since those results span many years and produce long, paged tables that are hard to read and do not add much insight on the website and to readers. Instead, I created separate 2014 summary tables that give a clear, single year snapshot for each city, which makes the patterns in the three different queries easier to compare side by side.
 
-```{r}
-DBI::dbDisconnect(con_traffic)
-```
+Across the three analyses, a few patterns stood out. First, we saw that vehicular stops were far more common than pedestrian stops in all three cities, although the trends over time were different for each location. The distribution of racial categories in the stop records also varied across the cities, with San Jose showing a higher share of stops recorded as Hispanic compared with the other two datasets. In the citation analysis, Long Beach and Mesa showed higher citation rates across all groups, while San Jose showed lower rates overall. These differences point to variation in how each agency documents and processes its stops rather than anything about the groups themselves, and they highlight how comparing multiple cities side by side helps reveal differences in reporting and practice.
 
 
 ## References
