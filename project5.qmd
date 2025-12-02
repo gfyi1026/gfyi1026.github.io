@@ -1,0 +1,365 @@
+---
+title: "SQL Analysis of Traffic Stop Data"
+description: |
+  Analysis of Traffic Stop Data using SQL
+author: "Guy Fuchs"
+date: today
+format: html
+execute:
+  warning: false
+  message: false
+---
+
+## Introduction
+
+For this project I want to explore how police stop patterns differ across several cities included in the Stanford Open Policing Project. I plan to pull data from three separate city-level tables (Long Beach in CA, Mesa in AZ, and San Jose in CA) and use SQL to compare how many pedestrian and vehicular stops occur over time, how the racial mix of the people stopped varies, and how often citations are issued across race. My plan is to combine the data sets, summarize and analyze them using different SQL queries, and then visualize the results with plots that will highlight differences across cities and stop types. My main goal is to see whether the data suggests meaningful variations in who gets stopped or cited, and whether those patterns look similar or different across the three cities.
+
+```{r}
+library(tidyverse)
+library(scales)
+library(DBI)
+
+con_traffic <- DBI::dbConnect(
+
+  RMariaDB::MariaDB(),
+
+  dbname = "traffic",
+
+  host = Sys.getenv("TRAFFIC_HOST"),
+
+  user = Sys.getenv("TRAFFIC_USER"),
+
+  password = Sys.getenv("TRAFFIC_PWD")
+
+)
+
+```
+
+
+## First Query
+
+For my first query, my goal is to combine three city tables and keep only vehicular/pedestrian, extract the year, and then count stops by city-year-type.
+I restrict the year span to be the years 2014 through 2016, which is the period that Mesa, Long Beach, and San Jose all report data in the SOPP database.
+
+
+```{sql connection=con_traffic, output.var="stops_by_year_type", results="hide"}
+SELECT
+  city,
+  YEAR(date) AS year,
+  type,
+  COUNT(*) AS n_stops
+FROM (
+
+    SELECT 'Mesa' AS city, date, type
+    FROM az_mesa_2023_01_26
+
+    UNION ALL
+
+    SELECT 'Long Beach' AS city, date, type
+    FROM ca_long_beach_2020_04_01
+
+    UNION ALL
+
+    SELECT 'San Jose' AS city, date, type
+    FROM ca_san_jose_2020_04_01
+
+) AS all_stops
+WHERE
+    date IS NOT NULL
+    AND YEAR(date) >= 2014
+    AND YEAR(date) <= 2016
+    AND type IN ('vehicular', 'pedestrian')
+GROUP BY
+    city, year, type
+ORDER BY
+    city, year, type;
+```
+
+
+Now, I can use the output of the above query in my plot below:
+```{r}
+ggplot(stops_by_year_type |>
+         mutate(n_stops = as.numeric(n_stops)), 
+       aes(x = year, y = n_stops, color = type)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(~ city) +
+  scale_y_continuous(labels = comma) +
+  labs(
+    title = "Traffic and Pedestrian Stops Over Time",
+    x = "Year",
+    y = "Number of stops",
+    color = "Stop type"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+  axis.text.x = element_text(angle = 45, hjust = 1),
+  panel.grid.minor = element_blank()
+  )
+```
+
+This plot shows how the number of traffic stops changes over time for Long Beach, Mesa, and San Jose. I focused on pedestrian and vehicular stops between 2014 and 2016 so that all three cities share a common window of data, and we can see that vehicular stops dominate the totals in every city, and the overall levels differ quite a bit across the three locations. The trends themselves are also different, which gives the idea that each department operates under its own patterns and volumes of activity, which you would expect for different cities of such scales. 
+
+
+```{sql connection=con_traffic}
+SELECT
+  city,
+  YEAR(date) AS year,
+  SUM(CASE WHEN type = 'pedestrian' THEN 1 ELSE 0 END) AS pedestrian,
+  SUM(CASE WHEN type = 'vehicular' THEN 1 ELSE 0 END) AS vehicular
+FROM (
+
+    SELECT 'Long Beach' AS city, date, type
+    FROM ca_long_beach_2020_04_01
+
+    UNION ALL
+
+    SELECT 'Mesa' AS city, date, type
+    FROM az_mesa_2023_01_26
+
+    UNION ALL
+
+    SELECT 'San Jose' AS city, date, type
+    FROM ca_san_jose_2020_04_01
+
+) AS all_stops
+WHERE
+    date IS NOT NULL
+    AND YEAR(date) = 2014
+    AND type IN ('vehicular', 'pedestrian')
+GROUP BY
+    city, year
+ORDER BY
+    city;
+```
+
+This table summarizes stop counts for just the year 2014. There is one row per city and separate columns for pedestrian and vehicular stops. It makes it easy to compare both the overall scale of stops across cities and the relative size of pedestrian versus vehicular stops in the same year.
+
+
+## Second Query
+
+For my next query, my goal is to analyze the racial mix of stops by type and city for Long Beach, Mesa, and San Jose, using the same 2014 to 2016 window as in the first query, to see how the racial distribution of stops differs across the three cities. This query gives the counts of stops for each combination of race, city, and stop type, and keeps only groups with at least 50 stops so that very rare combinations do not drive/meaningfully alter the patterns.
+
+```{sql connection=con_traffic, output.var="race_counts", results="hide"}
+SELECT
+  city,
+  type,
+  subject_race,
+  COUNT(*) AS n_stops
+FROM (
+
+    SELECT 'Long Beach' AS city, date, type, subject_race
+    FROM ca_long_beach_2020_04_01
+
+    UNION ALL
+
+    SELECT 'Mesa' AS city, date, type, subject_race
+    FROM az_mesa_2023_01_26
+
+    UNION ALL
+
+    SELECT 'San Jose' AS city, date, type, subject_race
+    FROM ca_san_jose_2020_04_01
+
+) AS all_stops
+WHERE
+    date IS NOT NULL
+    AND YEAR(date) >= 2014
+    AND YEAR(date) <= 2016
+    AND type IN ('vehicular', 'pedestrian')
+    AND subject_race IN (
+        'white',
+        'black',
+        'hispanic',
+        'asian/pacific islander',
+        'other/unknown'
+    )
+GROUP BY
+    city, type, subject_race
+HAVING
+    COUNT(*) >= 50
+ORDER BY
+    city, type, n_stops DESC;
+```
+
+Now, I can use the output of the above query in my plot below:
+```{r}
+ggplot(race_counts, aes(x = subject_race, y = n_stops, fill = type)) +
+  geom_col(position = "fill") +
+  scale_y_continuous(labels = percent) +
+  facet_wrap(~ city) +
+  labs(
+    title = "Racial Composition of Stops by City and Stop Type (2014–2016)",
+    x = "Subject race",
+    y = "Percent of stops",
+    fill = "Stop type"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid.minor = element_blank()
+  )
+```
+
+This plot shows the racial makeup of police stops in Long Beach, Mesa, and San Jose between 2014 and 2016, separated into pedestrian and vehicular stops. Each bar represents one racial group and is scaled to 100 percent, so the height of each colored segment reflects the proportion of stops within that race category. Long Beach and San Jose show a visible mix of pedestrian and vehicular stops, while Mesa is almost exclusively vehicular in this dataset. The cities also differ in how heavily each racial group appears in the stop data, with San Jose showing the most variation across race and stop type compared to the other two cities. Overall, the chart highlights how both the racial distribution and the balance between pedestrian and vehicular stops vary from city to city.
+
+
+```{sql connection=con_traffic}
+SELECT
+  city,
+  YEAR(date) AS year,
+  SUM(CASE WHEN subject_race = 'white' THEN 1 ELSE 0 END) AS white,
+  SUM(CASE WHEN subject_race = 'black' THEN 1 ELSE 0 END) AS black,
+  SUM(CASE WHEN subject_race = 'hispanic' THEN 1 ELSE 0 END) AS hispanic,
+  SUM(CASE WHEN subject_race = 'asian/pacific islander' THEN 1 ELSE 0 END) AS asian_pacific_islander,
+  SUM(CASE WHEN subject_race = 'other/unknown' THEN 1 ELSE 0 END) AS other_unknown
+FROM (
+
+    SELECT 'Long Beach' AS city, date, subject_race
+    FROM ca_long_beach_2020_04_01
+
+    UNION ALL
+
+    SELECT 'Mesa' AS city, date, subject_race
+    FROM az_mesa_2023_01_26
+
+    UNION ALL
+
+    SELECT 'San Jose' AS city, date, subject_race
+    FROM ca_san_jose_2020_04_01
+
+) AS all_stops
+WHERE
+    date IS NOT NULL
+    AND YEAR(date) = 2014
+    AND subject_race IN (
+        'white',
+        'black',
+        'hispanic',
+        'asian/pacific islander',
+        'other/unknown'
+    )
+GROUP BY
+    city, year
+ORDER BY
+    city;
+```
+
+This 2014 table gives a simple view of how many stops involved each racial group in each city. It combines pedestrian and vehicular stops into a single snapshot to make the racial differences easy to compare across cities. For Long Beach, we see a relatively balanced distribution across white, Black, and Hispanic subjects, with smaller totals for Asian and Pacific Islander stops. Mesa shows fewer Black and Asian/Pacific Islander stops and a higher share of white stops, while San Jose has a noticeably larger number of Hispanic stops compared with the other cities. 
+
+
+## Third Query
+
+For my last query, I am going to be observing the search rates by race across the same three cities, Long Beach, Mesa, and San Jose, for 2014-2016. I am going to compare and try to understand whether searches happen at different rates for different groups.
+
+
+```{sql connection=con_traffic, output.var="citation_rates", results="hide"}
+SELECT
+  city,
+  subject_race,
+  COUNT(*) AS total_stops,
+  SUM(CASE WHEN citation_issued > 0 THEN 1 ELSE 0 END) AS citations,
+  SUM(CASE WHEN citation_issued > 0 THEN 1 ELSE 0 END) / COUNT(*) AS citation_rate
+FROM (
+
+    SELECT 'Long Beach' AS city, date, subject_race, citation_issued
+    FROM ca_long_beach_2020_04_01
+
+    UNION ALL
+
+    SELECT 'Mesa' AS city, date, subject_race, citation_issued
+    FROM az_mesa_2023_01_26
+
+    UNION ALL
+
+    SELECT 'San Jose' AS city, date, subject_race, citation_issued
+    FROM ca_san_jose_2020_04_01
+
+) AS all_stops
+WHERE
+    date IS NOT NULL
+    AND YEAR(date) >= 2014
+    AND YEAR(date) <= 2016
+    AND subject_race IN (
+        'white',
+        'black',
+        'hispanic',
+        'asian/pacific islander',
+        'other/unknown'
+    )
+GROUP BY
+    city, subject_race
+HAVING
+    COUNT(*) >= 50
+ORDER BY
+    city, citation_rate DESC;
+```
+
+
+Now, I can use the output of the above query in my plot below:
+```{r}
+ggplot(citation_rates, aes(x = subject_race, y = citation_rate, fill = city)) +
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = percent_format()) +
+  labs(
+    title = "Citation Rates by Race Across Cities (2014–2016)",
+    x = "Subject race",
+    y = "Citation rate",
+    fill = "City"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid.minor = element_blank()
+  )
+```
+
+This plot compares citation rates by race for Long Beach, Mesa, and San Jose between 2014 and 2016. For each racial group, the bars show the proportion of stops that resulted in a citation in each city. Long Beach and Mesa both show citation rates at or near 100 percent for all groups, which suggests that these datasets mainly contain stops where a citation was issued. However, San Jose has much lower citation rates at around a quarter of stops, with only modest differences across racial groups. This highlights that the differences in citation rates are driven not only by variation across cities, but also by differences in how the underlying agencies record their stops. It is unlikely that San Jose is issuing significantly fewer citations in practice, but rather more likely that their data includes a broader range of stop outcomes than those reported by Long Beach and Mesa.
+
+
+```{sql connection=con_traffic}
+SELECT
+  city,
+  SUM(CASE WHEN citation_issued > 0 THEN 1 ELSE 0 END) AS citations,
+  COUNT(*) AS total_stops,
+  SUM(CASE WHEN citation_issued > 0 THEN 1 ELSE 0 END) / COUNT(*) AS citation_rate
+FROM (
+
+    SELECT 'Long Beach' AS city, date, citation_issued
+    FROM ca_long_beach_2020_04_01
+
+    UNION ALL
+
+    SELECT 'Mesa' AS city, date, citation_issued
+    FROM az_mesa_2023_01_26
+
+    UNION ALL
+
+    SELECT 'San Jose' AS city, date, citation_issued
+    FROM ca_san_jose_2020_04_01
+
+) AS all_stops
+WHERE
+    date IS NOT NULL
+    AND YEAR(date) = 2014
+GROUP BY
+    city
+ORDER BY
+    city;
+```
+
+This 2014 table gives a compact summary of how many citations were issued in each city and what share of all stops resulted in a citation. It provides a single-year snapshot that makes it easy to compare how common citations were across the three cities.
+
+## Conclusion
+
+To conclude, in this project I used SQL to pull and wrangle traffic stop data for Long Beach, Mesa, and San Jose from the Stanford Open Policing Project. I first combined the three city tables to track pedestrian and vehicular stops over time, then summarized the racial composition of stops by city and stop type, and finally compared citation rates across race and city. For each step I relied on SQL for all of the data wrangling and used R only to turn the summarized results into plots. I chose not to display the full output tables from the large queries that feed the plots, since those results span many years and produce long, paged tables that are hard to read and do not add much insight on the website and to readers. Instead, I created separate 2014 summary tables that give a clear, single year snapshot for each city, which makes the patterns in the three different queries easier to compare side by side.
+
+```{r}
+DBI::dbDisconnect(con_traffic)
+```
+
+
+## References
+
+Pierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al. 2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” *Nature Human Behaviour*, 1–10.
+

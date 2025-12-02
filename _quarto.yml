@@ -22,6 +22,8 @@ website:
         text: Simulation Study
       - href: project4.qmd
         text: Ethics - Data and Power
+      - href: project5.qmd
+        text: SQL Analysis of Traffic Stop Data
 
   page-footer:
     center:
