@@ -20,16 +20,26 @@ library(tidyverse)
 library(scales)
 ```
 
+The Kidz Bop censored lyrics dataset has one row for each censored instance in a song: the artist (ogArtist), song title (songName), a category for the type of content, the original lyric line (ogLyric), and the Kidz Bop version (kbLyric).
+
+Because songs can have several censored words, and the same line can appear more than once, the same lyric line can show up in multiple rows. When I look at words or phrases inside ogLyric, I first collapse down to one row per unique original lyric line so I do not double count the same line.
+
+
 ```{r}
 kb <- read_csv("https://raw.githubusercontent.com/the-pudding/data/master/kidz-bop/KB_censored-lyrics.csv")
 
+kb_lines <- kb |> # collapsing to one row per unique ogLyric line
+distinct(ogArtist, songName, ogLyric, .keep_all = TRUE)
+```
+
+# What does Kidz Bop censor most?
+```{r}
 category_counts <- kb |>
-  count(category) |>
-  head(10)
+  count(category)
 
 top8 <- head(category_counts, 8) 
 
-ggplot(data = top8, aes(x = reorder(category, n), y = n)) +
+ggplot(top8, aes(x = reorder(category, n), y = n)) +
   geom_col(fill = "steelblue") +
   coord_flip() +
   labs(
@@ -41,30 +51,45 @@ ggplot(data = top8, aes(x = reorder(category, n), y = n)) +
   theme_minimal()
 ```
 
+
 This plot helps to show which types of content are most frequently censored in Kidz Bop songs. From the counts, we can see that profanity and sexual references make up the largest portion of censored lyrics, followed closely by alcohol and drug references. Categories like violence, identity, and other themes appear much less often.
 
 These patterns reveal that Kidz Bop's censorship choices focus mainly on removing language that could be considered inappropriate or too mature for a younger audience, while other categories are less frequently flagged. This highlights how producers are likely prioritizing a "family-friendly" tone in their songs.
 
+# Words that follow "my" in lyric lines
+
 ```{r}
-kb|>
-  mutate(my_word=str_extract_all(ogLyric, "(?<=\\bmy\\s)\\w+")) |>
+my_after <- kb_lines |>
+  mutate(my_word = str_extract_all(ogLyric, "(?<=\\bmy\\s)\\w+")) |>
   select(my_word) |>
   unnest(my_word) |>
   count(my_word, sort = TRUE) |>
-  head(10)
+  slice_head(n = 10)
+
+my_after
 ```
 
-This table shows which words most often follow the word "my" in the original lyrics of the Kidz Bop songs. We can see that the top three words that follow "my" are nights, woman, and God, highlighting the personal and relational themes in censored lyrics.
+This table uses kb_lines, so each original lyric line only appears once even if it was censored for multiple words. For all lines that contain the word "my", it finds the word that immediately follows "my" and counts how often each one appears.
+
+The most common followers of "my" include words like God, nights, and body, which hints at personal experiences, relationships, and emotional themes in the censored lines. This reflects the kinds of ideas that sometimes get edited in Kidz Bop versions.
+
+# Common openings of censored lyric lines
 
 ```{r}
-kb |>
-  mutate(first_three_words = str_extract(ogLyric, "^(?:\\S+\\s+){0,2}\\S+")) |>  
-  count(first_three_words, sort = TRUE) |>
-  head(10)
+first_three <- kb_lines |>
+mutate(first_three_words = str_extract(ogLyric, "^(?:\\S+\\s+){0,2}\\S+")) |>
+count(first_three_words, sort = TRUE) |>
+slice_head(n = 10)
+
+first_three
 ```
 
-This table shows the most common three-word openings found in the original lyrics of Kidz Bop songs. We can see that many of the top phrases like "Blow a kiss", "Be my woman", and "Kissed her on" start with actions and expressions of relationships. These repeated openings show that censored lyrics often begin with personal and romantic themes that would likely need to be toned down for the younger audience of Kidz Bop. 
+Here I look at the first three words of each unique original lyric line that contains censored content. This is about how censored lines start, not about the first line of each song. Repeated phrases can still show up because many songs repeat the same lyric line multiple times.
 
+Many of the common openings begin with short actions, direct expressions, or inappropriate words/romantic themes which then lead into content that Kidz Bop changes, such as romantic or suggestive wording.
+
+
+# Relationship words over time
 
 ```{r}
 
@@ -77,14 +102,17 @@ reg_expression <- "\\b(love|lover|kiss|kissing|baby|girlfriend|boyfriend|girl|bo
 by_year <- kb_lower |>
   mutate(has_relationship = str_detect(og_lower, reg_expression)) |>
   group_by(year) |>
-  summarise(total = n(), relationship = sum(has_relationship, na.rm = TRUE), pct = relationship / total) |>
+  summarise(
+    total = n(),
+    relationship = sum(has_relationship, na.rm = TRUE),
+    pct = mean(has_relationship, na.rm = TRUE)) |>
   filter(total >= 20) |> # helps to stabilize the percentages
   ungroup()
 
 ggplot(by_year, aes(x = year, y = pct)) +
   geom_line() +
   geom_point() +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1))   +
   labs(
     title = "Lyrics mentioning relationships over time",
     subtitle = "Share of original lyrics with partner or family terms (years with 20+ rows)",

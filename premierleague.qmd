@@ -10,7 +10,7 @@ execute:
   message: false
 ---
 
-> Dataset page: [TidyTuesday: Premier League Match Data](https://github.com/rfordatascience/tidytuesday/tree/main/data/2023/2023-04-04)  
+> Dataset page: [TidyTuesday: Premier League Match Data 2023-04-04](https://github.com/rfordatascience/tidytuesday/tree/main/data/2023/2023-04-04)  
 > Original source: [Official Premier League Statistics](https://www.premierleague.com/stats)
 
 ```{r}

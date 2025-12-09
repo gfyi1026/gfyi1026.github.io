@@ -79,11 +79,12 @@ ORDER BY
 Now, I can use the output of the above query in my plot below:
 ```{r}
 ggplot(stops_by_year_type |>
-         mutate(n_stops = as.numeric(n_stops)), 
+         mutate(year = as.integer(year), n_stops = as.numeric(n_stops)), 
        aes(x = year, y = n_stops, color = type)) +
   geom_line() +
   geom_point() +
   facet_wrap(~ city) +
+  scale_x_continuous(breaks = 2014:2016) +
   scale_y_continuous(labels = comma) +
   labs(
     title = "Traffic and Pedestrian Stops Over Time",
@@ -139,6 +140,8 @@ This table summarizes stop counts for just the year 2014. There is one row per c
 ## Second Query
 
 For my next query, my goal is to analyze the racial mix of stops by type and city for Long Beach, Mesa, and San Jose, using the same 2014 to 2016 window as in the first query, to see how the racial distribution of stops differs across the three cities. This query gives the counts of stops for each combination of race, city, and stop type, and keeps only groups with at least 50 stops so that very rare combinations do not drive/meaningfully alter the patterns.
+
+A subtle point in this query is how the "HAVING COUNT(*) >= 50 condition works. Since the data is grouped by city, stop type, and subject race, the HAVING clause applies to each city-type-race combination. That means a pedestrian bar for a given race will be dropped if there are fewer than 50 stops for that race in that city, even if there are many vehicular stops for the same race there. I decided that was acceptable here, because the groups that get removed are very small and would give noisy percentages, but is is important to keep in mind that the 50 stop filter is acting at the city-type-race level rather than only city-race.
 
 ```{sql connection=con_traffic, output.var="race_counts", results="hide"}
 SELECT
@@ -201,7 +204,7 @@ ggplot(race_counts, aes(x = subject_race, y = n_stops, fill = type)) +
   )
 ```
 
-This plot shows the racial makeup of police stops in Long Beach, Mesa, and San Jose between 2014 and 2016, separated into pedestrian and vehicular stops. Each bar represents one racial group and is scaled to 100 percent, so the height of each colored segment reflects the proportion of stops within that race category. Long Beach and San Jose show a visible mix of pedestrian and vehicular stops, while Mesa is almost exclusively vehicular in this dataset. The cities also differ in how heavily each racial group appears in the stop data, with San Jose showing the most variation across race and stop type compared to the other two cities. Overall, the chart highlights how both the racial distribution and the balance between pedestrian and vehicular stops vary from city to city.
+This plot shows the racial makeup of police stops in Long Beach, Mesa, and San Jose between 2014 and 2016, separated into pedestrian and vehicular stops. Each bar represents one racial group and is scaled to 100 percent, so the height of each colored segment reflects the proportion of stops within that race category. Also, very small city-type-race combinations with fewer than 50 stops are excluded so that each bar segment represents a reasonably sized group. Long Beach and San Jose show a visible mix of pedestrian and vehicular stops, while Mesa is almost exclusively vehicular in this dataset. The cities also differ in how heavily each racial group appears in the stop data, with San Jose showing the most variation across race and stop type compared to the other two cities. Overall, the chart highlights how both the racial distribution and the balance between pedestrian and vehicular stops vary from city to city.
 
 
 ```{sql connection=con_traffic}
@@ -278,6 +281,7 @@ FROM (
 ) AS all_stops
 WHERE
     date IS NOT NULL
+    AND citation_issued IS NOT NULL
     AND YEAR(date) >= 2014
     AND YEAR(date) <= 2016
     AND subject_race IN (
@@ -314,7 +318,11 @@ ggplot(citation_rates, aes(x = subject_race, y = citation_rate, fill = city)) +
   )
 ```
 
-This plot compares citation rates by race for Long Beach, Mesa, and San Jose between 2014 and 2016. For each racial group, the bars show the proportion of stops that resulted in a citation in each city. What we learn from this query is that Long Beach and Mesa both show citation rates at or near 100 percent for all groups, which suggests that these datasets mainly contain stops where a citation was issued. However, San Jose has much lower citation rates at around a quarter of stops, with only modest differences across racial groups, not enough of a difference to draw a firm conclusion. This highlights that the differences in citation rates are driven not only by variation across cities, but also by differences in how the underlying agencies record their stops. It is unlikely that San Jose is issuing significantly fewer citations in practice, but rather more likely that their data includes a broader range of stop outcomes than those reported by Long Beach and Mesa.
+This plot compares citation rates by race for Long Beach, Mesa, and San Jose between 2014 and 2016. For each racial group, the bars show the proportion of stops that resulted in a citation in each city. What we learn from this query is that Long Beach and Mesa both show citation rates at or near 100 percent for all groups, which suggests that these datasets mainly contain stops where a citation was issued. To take it one step further, we can potentially conclude that the datasets for Long Beach and Mesa may only include stops that led to a citation, or that non-citation outcomes were not consistently recorded or not recorded at all. 
+
+However, San Jose has much lower citation rates at around a quarter of stops, with only modest differences across racial groups, not enough of a difference to draw a firm conclusion. This highlights that the differences in citation rates are driven not only by variation across cities, but also by differences in how the underlying agencies record their stops. It is unlikely that San Jose is issuing significantly fewer citations in practice, but rather more likely that their data includes a broader range of stop outcomes than those reported by Long Beach and Mesa.
+
+Moreover, 
 
 
 ```{sql connection=con_traffic}
@@ -358,8 +366,7 @@ DBI::dbDisconnect(con_traffic)
 
 To conclude, in this project I used SQL to pull and wrangle traffic stop data for Long Beach, Mesa, and San Jose from the Stanford Open Policing Project. I first combined the three city tables to track pedestrian and vehicular stops over time, then summarized the racial composition of stops by city and stop type, and finally compared citation rates across race and city. For each step I relied on SQL for all of the data wrangling and used R only to turn the summarized results into plots. I chose not to display the full output tables from the large queries that feed the plots, since those results span many years and produce long, paged tables that are hard to read and do not add much insight on the website and to readers. Instead, I created separate 2014 summary tables that give a clear, single year snapshot for each city, which makes the patterns in the three different queries easier to compare side by side.
 
-Across the three analyses, a few patterns stood out. First, we saw that vehicular stops were far more common than pedestrian stops in all three cities, although the trends over time were different for each location. The distribution of racial categories in the stop records also varied across the cities, with San Jose showing a higher share of stops recorded as Hispanic compared with the other two datasets. In the citation analysis, Long Beach and Mesa showed higher citation rates across all groups, while San Jose showed lower rates overall. These differences point to variation in how each agency documents and processes its stops rather than anything about the groups themselves, and they highlight how comparing multiple cities side by side helps reveal differences in reporting and practice.
-
+Across the three analyses, a few patterns stood out. First, we saw that vehicular stops were far more common than pedestrian stops in all three cities, although the trends over time were different for each location. The distribution of racial categories in the stop records also varied across the cities, with San Jose showing a higher share of stops recorded as Hispanic compared with the other two datasets. In the citation analysis, Long Beach and Mesa showed higher citation rates across all groups, while San Jose showed lower rates overall. These differences point to variation in how each agency documents and processes its stops rather than anything about the groups themselves, and they highlight how comparing multiple cities side by side helps reveal differences in reporting and practice. The citation results reinforced this idea by showing how agency level recording choices can shape the patterns we see, since Long Beach and Mesa appear to record mainly citation producing stops, while San Jose includes a broader set of outcomes.
 
 ## References
 

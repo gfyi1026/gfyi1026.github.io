@@ -1,11 +1,17 @@
 ---
-title: "About"
+title: "About Me"
 ---
 
-This is my first project for my intro to data science class.
+I grew up in Irvine, California, and have two sisters and a pet dog named Luna. 
+Here are some pictures of us:
 
-This is me playing around with R and my website
 
-```{r}
-1 + 2
-```
+
+My favorite sport is soccer, and I am a member of the Pomona-Pitzer Men's soccer team here on campus. Some action shots:
+
+
+One of my favorite things to do in my free time is travel, whether it be to new countries or to local hiking spots in the area. Some of my adventures:
+
+
+
+Thanks for stopping by!

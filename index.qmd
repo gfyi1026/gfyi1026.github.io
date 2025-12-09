@@ -15,4 +15,4 @@ about:
       href: mailto:gfyi2023@mymail.pomona.edu
 ---
 
-Hi there, my name is Guy Fuchs and I am a junior at Pomona College studying computer science and physics. I also play on the soccer team here, and love traveling.
+Hi there, my name is Guy Fuchs and I am a junior at Pomona College studying computer science and physics. I've always been interested in data science as well, so I've created this website to showcase some of my mini-projects I've worked on recently!

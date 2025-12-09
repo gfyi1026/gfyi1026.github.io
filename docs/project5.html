@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Guy Fuchs">
-<meta name="dcterms.date" content="2025-12-01">
+<meta name="dcterms.date" content="2025-12-08">
 <meta name="description" content="Analysis of Traffic Stop Data using SQL">
 
 <title>SQL Analysis of Traffic Stop Data – Guy Fuchs</title>
@@ -219,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 1, 2025</p>
+      <p class="date">December 8, 2025</p>
     </div>
   </div>
   
@@ -292,23 +292,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now, I can use the output of the above query in my plot below:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stops_by_year_type <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">mutate</span>(<span class="at">n_stops =</span> <span class="fu">as.numeric</span>(n_stops)), </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.integer</span>(year), <span class="at">n_stops =</span> <span class="fu">as.numeric</span>(n_stops)), </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n_stops, <span class="at">color =</span> type)) <span class="sc">+</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> city) <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> comma) <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Traffic and Pedestrian Stops Over Time"</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of stops"</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Stop type"</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2014</span><span class="sc">:</span><span class="dv">2016</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> comma) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Traffic and Pedestrian Stops Over Time"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of stops"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Stop type"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -387,6 +388,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="second-query" class="level2">
 <h2 class="anchored" data-anchor-id="second-query">Second Query</h2>
 <p>For my next query, my goal is to analyze the racial mix of stops by type and city for Long Beach, Mesa, and San Jose, using the same 2014 to 2016 window as in the first query, to see how the racial distribution of stops differs across the three cities. This query gives the counts of stops for each combination of race, city, and stop type, and keeps only groups with at least 50 stops so that very rare combinations do not drive/meaningfully alter the patterns.</p>
+<p>A subtle point in this query is how the “HAVING COUNT(*) &gt;= 50 condition works. Since the data is grouped by city, stop type, and subject race, the HAVING clause applies to each city-type-race combination. That means a pedestrian bar for a given race will be dropped if there are fewer than 50 stops for that race in that city, even if there are many vehicular stops for the same race there. I decided that was acceptable here, because the groups that get removed are very small and would give noisy percentages, but is is important to keep in mind that the 50 stop filter is acting at the city-type-race level rather than only city-race.</p>
 <div class="cell" data-output.var="race_counts">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  city,</span>
@@ -453,7 +455,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>This plot shows the racial makeup of police stops in Long Beach, Mesa, and San Jose between 2014 and 2016, separated into pedestrian and vehicular stops. Each bar represents one racial group and is scaled to 100 percent, so the height of each colored segment reflects the proportion of stops within that race category. Long Beach and San Jose show a visible mix of pedestrian and vehicular stops, while Mesa is almost exclusively vehicular in this dataset. The cities also differ in how heavily each racial group appears in the stop data, with San Jose showing the most variation across race and stop type compared to the other two cities. Overall, the chart highlights how both the racial distribution and the balance between pedestrian and vehicular stops vary from city to city.</p>
+<p>This plot shows the racial makeup of police stops in Long Beach, Mesa, and San Jose between 2014 and 2016, separated into pedestrian and vehicular stops. Each bar represents one racial group and is scaled to 100 percent, so the height of each colored segment reflects the proportion of stops within that race category. Also, very small city-type-race combinations with fewer than 50 stops are excluded so that each bar segment represents a reasonably sized group. Long Beach and San Jose show a visible mix of pedestrian and vehicular stops, while Mesa is almost exclusively vehicular in this dataset. The cities also differ in how heavily each racial group appears in the stop data, with San Jose showing the most variation across race and stop type compared to the other two cities. Overall, the chart highlights how both the racial distribution and the balance between pedestrian and vehicular stops vary from city to city.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  city,</span>
@@ -578,21 +580,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> all_stops</span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span></span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="dt">date</span> <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="op">&gt;=</span> <span class="dv">2014</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="op">&lt;=</span> <span class="dv">2016</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> subject_race <span class="kw">IN</span> (</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">'white'</span>,</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">'black'</span>,</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">'hispanic'</span>,</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">'asian/pacific islander'</span>,</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">'other/unknown'</span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    city, subject_race</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;=</span> <span class="dv">50</span></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    city, citation_rate <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> citation_issued <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="op">&gt;=</span> <span class="dv">2014</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="op">&lt;=</span> <span class="dv">2016</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> subject_race <span class="kw">IN</span> (</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">'white'</span>,</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">'black'</span>,</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">'hispanic'</span>,</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">'asian/pacific islander'</span>,</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">'other/unknown'</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    city, subject_race</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;=</span> <span class="dv">50</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    city, citation_rate <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, I can use the output of the above query in my plot below:</p>
 <div class="cell">
@@ -618,7 +621,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>This plot compares citation rates by race for Long Beach, Mesa, and San Jose between 2014 and 2016. For each racial group, the bars show the proportion of stops that resulted in a citation in each city. What we learn from this query is that Long Beach and Mesa both show citation rates at or near 100 percent for all groups, which suggests that these datasets mainly contain stops where a citation was issued. However, San Jose has much lower citation rates at around a quarter of stops, with only modest differences across racial groups, not enough of a difference to draw a firm conclusion. This highlights that the differences in citation rates are driven not only by variation across cities, but also by differences in how the underlying agencies record their stops. It is unlikely that San Jose is issuing significantly fewer citations in practice, but rather more likely that their data includes a broader range of stop outcomes than those reported by Long Beach and Mesa.</p>
+<p>This plot compares citation rates by race for Long Beach, Mesa, and San Jose between 2014 and 2016. For each racial group, the bars show the proportion of stops that resulted in a citation in each city. What we learn from this query is that Long Beach and Mesa both show citation rates at or near 100 percent for all groups, which suggests that these datasets mainly contain stops where a citation was issued. To take it one step further, we can potentially conclude that the datasets for Long Beach and Mesa may only include stops that led to a citation, or that non-citation outcomes were not consistently recorded or not recorded at all.</p>
+<p>However, San Jose has much lower citation rates at around a quarter of stops, with only modest differences across racial groups, not enough of a difference to draw a firm conclusion. This highlights that the differences in citation rates are driven not only by variation across cities, but also by differences in how the underlying agencies record their stops. It is unlikely that San Jose is issuing significantly fewer citations in practice, but rather more likely that their data includes a broader range of stop outcomes than those reported by Long Beach and Mesa.</p>
+<p>Moreover,</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  city,</span>
@@ -690,7 +695,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>To conclude, in this project I used SQL to pull and wrangle traffic stop data for Long Beach, Mesa, and San Jose from the Stanford Open Policing Project. I first combined the three city tables to track pedestrian and vehicular stops over time, then summarized the racial composition of stops by city and stop type, and finally compared citation rates across race and city. For each step I relied on SQL for all of the data wrangling and used R only to turn the summarized results into plots. I chose not to display the full output tables from the large queries that feed the plots, since those results span many years and produce long, paged tables that are hard to read and do not add much insight on the website and to readers. Instead, I created separate 2014 summary tables that give a clear, single year snapshot for each city, which makes the patterns in the three different queries easier to compare side by side.</p>
-<p>Across the three analyses, a few patterns stood out. First, we saw that vehicular stops were far more common than pedestrian stops in all three cities, although the trends over time were different for each location. The distribution of racial categories in the stop records also varied across the cities, with San Jose showing a higher share of stops recorded as Hispanic compared with the other two datasets. In the citation analysis, Long Beach and Mesa showed higher citation rates across all groups, while San Jose showed lower rates overall. These differences point to variation in how each agency documents and processes its stops rather than anything about the groups themselves, and they highlight how comparing multiple cities side by side helps reveal differences in reporting and practice.</p>
+<p>Across the three analyses, a few patterns stood out. First, we saw that vehicular stops were far more common than pedestrian stops in all three cities, although the trends over time were different for each location. The distribution of racial categories in the stop records also varied across the cities, with San Jose showing a higher share of stops recorded as Hispanic compared with the other two datasets. In the citation analysis, Long Beach and Mesa showed higher citation rates across all groups, while San Jose showed lower rates overall. These differences point to variation in how each agency documents and processes its stops rather than anything about the groups themselves, and they highlight how comparing multiple cities side by side helps reveal differences in reporting and practice. The citation results reinforced this idea by showing how agency level recording choices can shape the patterns we see, since Long Beach and Mesa appear to record mainly citation producing stops, while San Jose includes a broader set of outcomes.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
