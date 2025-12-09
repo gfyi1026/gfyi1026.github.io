@@ -249,7 +249,7 @@ Original source: The data was originally published in the 1974 Motor Trend US Ma
 <li>Alternative hypothesis (H₁): In that same population, manual transmissions have higher mean MPG than automatics, so the true difference in mean MPG (Manual − Automatic) is positive.</li>
 </ul>
 <p>This test will compare two varaibles from the dataset, the first being mpg, a numerical value representing miles per gallon for each car. The second is am, indicating transmission type. In the raw dataset, 0 means automatic and 1 means manual, so I convert it into a factor with clearer labels. Therefore, these two variables form the foundation of both the observed comparison and the simulated null distribution.</p>
-<p>To test these hypotheses, I use a permutation test. I compute the observed difference in mean MPG between manual and automatic cars, then simulate a world where transmission type has no relationship with MPG by repeatedly shuffling the transmission labels and recomputing the difference. This builds a null distribution for the statistic (Manual − Automatic mean MPG) that I can compare to the observed value to obtain a one sided p value.</p>
+<p>To test these hypotheses, I will use a permutation test. I compute the observed difference in mean MPG between manual and automatic cars, then simulate a world where transmission type has no relationship with MPG by repeatedly shuffling the transmission labels and recomputing the difference. This builds a null distribution for the statistic (Manual − Automatic mean MPG) that I can compare to the observed value to obtain a one sided p value.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(mtcars, <span class="at">rownames =</span> <span class="st">"model"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">am =</span> <span class="fu">factor</span>(am, <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Automatic"</span>, <span class="st">"Manual"</span>)))</span>
@@ -276,9 +276,14 @@ Original source: The data was originally published in the 1974 Motor Trend US Ma
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="project3_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-mtcars-mpg-transmission" class="quarto-float quarto-figure quarto-figure-center anchored" width="672" alt="Boxplot comparing miles per gallon (y-axis) for cars with automatic versus manual transmissions (x-axis) in the mtcars dataset. Manual cars show a higher median MPG and a wider spread of values, while automatic cars cluster lower with less variation. Individual data points are jittered over each box.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mtcars-mpg-transmission-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="project3_files/figure-html/fig-mtcars-mpg-transmission-1.png" id="fig-mtcars-mpg-transmission" class="img-fluid figure-img" alt="Boxplot comparing miles per gallon (y-axis) for cars with automatic versus manual transmissions (x-axis) in the mtcars dataset. Manual cars show a higher median MPG and a wider spread of values, while automatic cars cluster lower with less variation. Individual data points are jittered over each box." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-mtcars-mpg-transmission-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
 </figure>
 </div>
 </div>
@@ -358,14 +363,19 @@ Original source: The data was originally published in the 1974 Motor Trend US Ma
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="project3_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-mtcars-permutation-null" class="quarto-float quarto-figure quarto-figure-center anchored" width="672" alt="Histogram showing the permutation-based null distribution of the difference in mean MPG between manual and automatic cars, where the x-axis is the null statistic (manual - automatic mean MPG) and the y-axis is the count. The distribution is centered near zero with a wide spread from about negative six to positive six. A dashed vertical line marks the observed difference, which lies far to the right of most simulated values.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mtcars-permutation-null-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="project3_files/figure-html/fig-mtcars-permutation-null-1.png" id="fig-mtcars-permutation-null" class="img-fluid figure-img" alt="Histogram showing the permutation-based null distribution of the difference in mean MPG between manual and automatic cars, where the x-axis is the null statistic (manual - automatic mean MPG) and the y-axis is the count. The distribution is centered near zero with a wide spread from about negative six to positive six. A dashed vertical line marks the observed difference, which lies far to the right of most simulated values." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-mtcars-permutation-null-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>This histogram shows the null distribution of differences in mean MPG between manual and automatic cars, created by randomly shuffling the transmission labels 5,000 times. The x-axis represents the simulated differences under the null hypothesis of no relationship between transmission and MPG, with the y-axis showing how often each difference occurred. The dashed vertical line marks the observed difference from the real data, which was about 7.24 MPG. This observed value lies far to the right of all simulated values, and thus suggests that differences of this magnitude almost never appear in a world where transmission type has no relationship to MPG among early 1970s cars. So, this visual is consistnent with the small one sided p value and supports the idea that the observed difference is unlikely to be due to random variation alone.</p>
+<p>This histogram shows the null distribution of differences in mean MPG between manual and automatic cars, created by randomly shuffling the transmission labels 5,000 times. The x-axis represents the simulated differences under the null hypothesis of no relationship between transmission and MPG, with the y-axis showing how often each difference occurred. The dashed vertical line marks the observed difference from the real data, which was about 7.24 MPG. This observed value lies far to the right of all simulated values, and thus suggests that differences of this magnitude almost never appear in a world where transmission type has no relationship to MPG among early 1970s cars. So, this visual is consistent with the small one sided p value and supports the idea that the observed difference is unlikely to be due to random variation alone.</p>
 </section>
 <section id="to-conclude" class="level1">
 <h1>To conclude:</h1>

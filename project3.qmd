@@ -32,7 +32,7 @@ My goal is to test whether manual transmissions in that 1970s era population ten
 
 This test will compare two varaibles from the dataset, the first being mpg, a numerical value representing miles per gallon for each car. The second is am, indicating transmission type. In the raw dataset, 0 means automatic and 1 means manual, so I convert it into a factor with clearer labels. Therefore, these two variables form the foundation of both the observed comparison and the simulated null distribution.
 
-To test these hypotheses, I use a permutation test. I compute the observed difference in mean MPG between manual and automatic cars, then simulate a world where transmission type has no relationship with MPG by repeatedly shuffling the transmission labels and recomputing the difference. This builds a null distribution for the statistic (Manual − Automatic mean MPG) that I can compare to the observed value to obtain a one sided p value.
+To test these hypotheses, I will use a permutation test. I compute the observed difference in mean MPG between manual and automatic cars, then simulate a world where transmission type has no relationship with MPG by repeatedly shuffling the transmission labels and recomputing the difference. This builds a null distribution for the statistic (Manual − Automatic mean MPG) that I can compare to the observed value to obtain a one sided p value.
 
 ```{r}
 cars <- as_tibble(mtcars, rownames = "model") |>
@@ -42,6 +42,9 @@ cars |>
 ```
 
 ```{r}
+#| label: fig-mtcars-mpg-transmission
+#| fig-alt: "Boxplot comparing miles per gallon (y-axis) for cars with automatic versus manual transmissions (x-axis) in the mtcars dataset. Manual cars show a higher median MPG and a wider spread of values, while automatic cars cluster lower with less variation. Individual data points are jittered over each box."
+
 ggplot(cars, aes(x = am, y = mpg, fill = am)) +
   geom_boxplot(width = 0.55, alpha = 0.7, outlier.shape = NA) +
   geom_jitter(width = 0.1) +
@@ -116,6 +119,9 @@ The simulation works by repeatedly shuffling the transmission labels to represen
 
 Plotting the null distribution:
 ```{r}
+#| label: fig-mtcars-permutation-null
+#| fig-alt: "Histogram showing the permutation-based null distribution of the difference in mean MPG between manual and automatic cars, where the x-axis is the null statistic (manual - automatic mean MPG) and the y-axis is the count. The distribution is centered near zero with a wide spread from about negative six to positive six. A dashed vertical line marks the observed difference, which lies far to the right of most simulated values."
+
 tibble(null = null_vals) |>
   ggplot(aes(x = null)) +
   geom_histogram(bins = 40, alpha = 0.85) +
@@ -127,7 +133,7 @@ tibble(null = null_vals) |>
   ) +
   theme_minimal()
 ```
-This histogram shows the null distribution of differences in mean MPG between manual and automatic cars, created by randomly shuffling the transmission labels 5,000 times. The x-axis represents the simulated differences under the null hypothesis of no relationship between transmission and MPG, with the y-axis showing how often each difference occurred. The dashed vertical line marks the observed difference from the real data, which was about 7.24 MPG. This observed value lies far to the right of all simulated values, and thus suggests that differences of this magnitude almost never appear in a world where transmission type has no relationship to MPG among early 1970s cars. So, this visual is consistnent with the small one sided p value and supports the idea that the observed difference is unlikely to be due to random variation alone.
+This histogram shows the null distribution of differences in mean MPG between manual and automatic cars, created by randomly shuffling the transmission labels 5,000 times. The x-axis represents the simulated differences under the null hypothesis of no relationship between transmission and MPG, with the y-axis showing how often each difference occurred. The dashed vertical line marks the observed difference from the real data, which was about 7.24 MPG. This observed value lies far to the right of all simulated values, and thus suggests that differences of this magnitude almost never appear in a world where transmission type has no relationship to MPG among early 1970s cars. So, this visual is consistent with the small one sided p value and supports the idea that the observed difference is unlikely to be due to random variation alone.
 
 # To conclude:
 

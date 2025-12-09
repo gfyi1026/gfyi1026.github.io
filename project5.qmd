@@ -78,6 +78,9 @@ ORDER BY
 
 Now, I can use the output of the above query in my plot below:
 ```{r}
+#| label: fig-stops-over-time
+#| fig-alt: "Line chart showing the number of pedestrian and vehicular police stops from 2014 to 2016 in Long Beach, Mesa, and San Jose, where the x-axis is year and the y-axis is number of stops. Vehicular stops are much higher than pedestrian stops across all cities. Mesa peaks sharply in 2015, while Long Beach and San Jose show gradual decreases over time. Each city is displayed in its own facet panel."
+
 ggplot(stops_by_year_type |>
          mutate(year = as.integer(year), n_stops = as.numeric(n_stops)), 
        aes(x = year, y = n_stops, color = type)) +
@@ -187,6 +190,9 @@ ORDER BY
 
 Now, I can use the output of the above query in my plot below:
 ```{r}
+#| label: fig-racial-composition-stops
+#| fig-alt: "Stacked percentage bar chart comparing racial composition of police stops in Long Beach, Mesa, and San Jose from 2014 to 2016, where the x-axis the subject race and the y-axis is the percent of stops. Each bar represents a racial group and is filled by stop type, showing the proportion of pedestrian versus vehicular stops within that race. Vehicular stops dominate most race categories except certain groups in San Jose, where pedestrian stops form a noticeable share for each subject race."
+
 ggplot(race_counts, aes(x = subject_race, y = n_stops, fill = type)) +
   geom_col(position = "fill") +
   scale_y_continuous(labels = percent) +
@@ -302,6 +308,9 @@ ORDER BY
 
 Now, I can use the output of the above query in my plot below:
 ```{r}
+#| label: fig-citation-rates-race
+#| fig-alt: "Side-by-side bar chart comparing citation rates across racial groups in Long Beach, Mesa, and San Jose between 2014 and 2016, where the x-axis the subject race and the y-axis is the citation rate, and each city has its own bar per subject race. Long Beach and Mesa show consistently high citation rates across groups, while San Jose shows much lower citation rates for all races."
+
 ggplot(citation_rates, aes(x = subject_race, y = citation_rate, fill = city)) +
   geom_col(position = "dodge") +
   scale_y_continuous(labels = percent_format()) +

@@ -16,6 +16,7 @@ execute:
 ```{r}
 #| label: fig-olympics-medals-by-year
 #| fig-alt: "Bar chart of the total number of recorded Olympic medals for each Summer Games from 1896 through the 2010s, where the x-axis is the Olympic year and the y-axis is the medal count. Bars grow taller over time with especially high medal counts in the late twentieth and early twenty first centuries."
+
 library(tidyverse)
 library(tidytuesdayR)
 

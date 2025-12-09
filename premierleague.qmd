@@ -16,6 +16,7 @@ execute:
 ```{r}
 #| label: fig-premier-league-home-goals
 #| fig-alt: "Bar chart of average home goals per match for each Premier League team in the 2021 to 2022 season. Each vertical blue bar represents one team on the x axis and its mean home goals on the y axis, with Manchester City and Liverpool among the highest scoring teams."
+
 library(tidyverse)
 library(tidytuesdayR)
 
