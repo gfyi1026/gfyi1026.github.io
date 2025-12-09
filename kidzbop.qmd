@@ -34,6 +34,9 @@ distinct(ogArtist, songName, ogLyric, .keep_all = TRUE)
 
 # What does Kidz Bop censor most?
 ```{r}
+#| label: fig-kb-censor-categories
+#| fig-alt: "Horizontal bar chart showing the top censored content categories in Kidz Bop lyrics, where the x-axis is number of censored instances and y-axis is the category. Profanity and sexual content have the highest counts at 325+, followed by alcohol and drugs, violence, other, and identity. Bars are ordered from most to least censored."
+
 category_counts <- kb |>
   count(category)
 
@@ -92,6 +95,8 @@ Many of the common openings begin with short actions, direct expressions, or ina
 # Relationship words over time
 
 ```{r}
+#| label: fig-kb-relationship-words
+#| fig-alt: "Line chart showing the percent of Kidz Bop lyrics that contain relationship or family related words each year, where the x-axis is year and y-axis is the percent of Kidz Bop lyrics that contain relationship or family. Values fluctuate between roughly five percent and thirty five percent, with noticeable peaks around 2014 and 2015 and lower percentages in earlier and later years."
 
 kb_lower <- kb |>
   filter(!is.na(year), !is.na(ogLyric))|>

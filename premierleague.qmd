@@ -14,6 +14,8 @@ execute:
 > Original source: [Official Premier League Statistics](https://www.premierleague.com/stats)
 
 ```{r}
+#| label: fig-premier-league-home-goals
+#| fig-alt: "Bar chart of average home goals per match for each Premier League team in the 2021 to 2022 season. Each vertical blue bar represents one team on the x axis and its mean home goals on the y axis, with Manchester City and Liverpool among the highest scoring teams."
 library(tidyverse)
 library(tidytuesdayR)
 
@@ -32,7 +34,6 @@ ggplot(team_goals, aes(x = HomeTeam, y = avg_goals)) +
     caption = "Source: TidyTuesday 2023-04-04, Premier League 2021–22"
   ) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-
 ```
 
+This chart gives a quick look at how often each Premier League team scored at home during the 2021–22 season. By averaging goals across all home matches, you can see which clubs tended to score more goals in front of their own fans and which ones ended up on the quieter side. A few teams stand out right away, like Manchester City and Liverpool, who both sit well above most of the league. Others cluster around one goal per match, which hints at more conservative or inconsistent home performances. The plot doesn’t try to explain why these differences show up, but it sets the stage for that kind of deeper analysis by putting the scoring patterns side by side.

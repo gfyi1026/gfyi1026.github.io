@@ -14,6 +14,8 @@ execute:
 > Original source: [Sports-Reference - Olympic History Project](https://www.sports-reference.com/olympics/)
 
 ```{r}
+#| label: fig-olympics-medals-by-year
+#| fig-alt: "Bar chart of the total number of recorded Olympic medals for each Summer Games from 1896 through the 2010s, where the x-axis is the Olympic year and the y-axis is the medal count. Bars grow taller over time with especially high medal counts in the late twentieth and early twenty first centuries."
 library(tidyverse)
 library(tidytuesdayR)
 
@@ -34,4 +36,4 @@ ggplot(medals_by_year, aes(x = year, y = n_medals)) +
   )
 ```
 
-
+This visual shows how the recorded medal totals have shifted across different Olympic years. Early Games have far fewer medals logged, then the bars start climbing as more events are added and participation widens to more people. You can see long stretches where the totals rise steadily, which hints at the growth of the Olympics overall. A few dips appear around years affected by global events, and the jump in more recent decades matches the expansion of both men’s and women’s competitions. The chart doesn’t explain every fluctuation, but it gives a clear sense of how the scale of the Olympic Games has changed over more than a century.
