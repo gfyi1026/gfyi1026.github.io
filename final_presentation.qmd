@@ -1,0 +1,27 @@
+---
+title: "Website Overview Presentation"
+author: "Guy Fuchs"
+subtitle: "12/10/25"
+format:
+  revealjs:
+    scrollable: true
+    slide-number: true
+    show-slide-number: all
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Overview
+Your intro here
+
+## Project Updates
+Explain the fixes you made
+
+## Example Visualization
+Add a plot or screenshot
+
+## Final Thoughts
+Wrap up

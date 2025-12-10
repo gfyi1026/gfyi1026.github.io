@@ -1,0 +1,18 @@
+---
+title: "TeamSync Project"
+format: html
+description: |
+  TeamSync project overview and README
+---
+
+This page hosts the README for my TeamSync project that I made with Kai Parker and Tiernan Colby, along with a quick overview.
+
+## Project Overview
+
+TeamSync organizes everything a student-athlete has on their plate into one connected system. Users can add classes, practices, and personal events, then instantly see where conflicts appear. Coaches get a broader view of their team’s schedules, including roster management and practice uploads, while athletes get an easy way to stay on top of their week. Our project focused on building something practical that handles real scheduling complexity.
+
+## README pdf
+
+You can view the full README here:
+
+[Open the TeamSync README (pdf)](files/teamsync-readme copy.pdf){target="_blank}

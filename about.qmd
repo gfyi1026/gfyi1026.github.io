@@ -1,17 +1,25 @@
 ---
 title: "About Me"
+format: html
 ---
 
-I grew up in Irvine, California, and have two sisters and a pet dog named Luna. 
-Here are some pictures of us:
+## At school
 
+Hi, I'm Guy, a computer science and physics student at Pomona College who likes building tools that people actually use.
 
+## Outside of class
 
-My favorite sport is soccer, and I am a member of the Pomona-Pitzer Men's soccer team here on campus. Some action shots:
+I grew up in Irvine, California, and have two sisters. Here is a picture of us:
 
+![My sisters and I](images/sisters.jpg){fig-alt="Guy and his sisters"}
 
-One of my favorite things to do in my free time is travel, whether it be to new countries or to local hiking spots in the area. Some of my adventures:
+My favorite sport is soccer, and I am a member of the Pomona-Pitzer Men's soccer team here on campus. Some shots:
 
+![Me playing soccer](images/soccer1.jpg){fig-alt="Guy playing soccer"}
+![My team and I getting ready before a game](images/teamsoccer.jpg){fig-alt="PP Men's Soccer Team before a game"}
 
+One of my favorite things to do in my free time is travel, whether it be to new countries or to local hiking spots in the area. Here is my most recent adventure to Albania:
+
+![Hiking in Albania](images/albania.jpg){fig-alt="Guy hiking in Albania"}
 
 Thanks for stopping by!

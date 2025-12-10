@@ -1,5 +1,6 @@
 ---
 title: "Guy Fuchs"
+format: html
 image: images/Guy_headshot.jpg
 toc: false
 about: 

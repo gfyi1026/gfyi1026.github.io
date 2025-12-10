@@ -1,5 +1,6 @@
 ---
 title: "Ethics - Data and Power - the COMPAS Algorithm"
+format: html
 description: "Analyzing the ethics in criminal risk prediction"
 date: 2025-11-10
 ---

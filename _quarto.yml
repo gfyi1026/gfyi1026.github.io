@@ -24,6 +24,10 @@ website:
         text: Ethics - Data and Power
       - href: project5.qmd
         text: SQL Analysis of Traffic Stop Data
+      - href: teamsync.qmd
+        text: TeamSync Project
+      - href: final_presentation.qmd
+        text: Website Overview Presentation
 
   page-footer:
     center:
@@ -35,12 +39,18 @@ website:
 format:
   html:
     theme:
-      light: minty
-      dark: solar
+      light: cerulean
+      dark: cyborg
     toc: true
     page-layout: full
     css: styles.css
+    mainfont: "Inter"
+    sansfont: "Inter"
+    monofont: "Fira Code"
     
+  revealjs:
+    slide-number: true
+    footer: "<a href='index.html'>Back to Home</a>"
 execute:
   warning: false
   message: false
