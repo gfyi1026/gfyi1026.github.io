@@ -14,14 +14,421 @@ execute:
   message: false
 ---
 
-## Overview
-Your intro here
+## My Data Science Portfolio
 
-## Project Updates
-Explain the fixes you made
+-   This presentation walks through the website I've built this semester
+-   Main goal is to be a single place to view several data projects
+-   I will briefly go over:
+    1.  Premier League Data Visualization
+    2.  Olympics Data Visualization
+    3.  Kidz Bop Censored Lyrics Analysis
+    4.  SQL Traffic Stop Analysis
 
-## Example Visualization
-Add a plot or screenshot
+# Premier League Data Visualization
 
-## Final Thoughts
-Wrap up
+------------------------------------------------------------------------
+
+## Question
+
+-   How do teams differ in average goals scored at home in the 2021-22 season?
+
+------------------------------------------------------------------------
+
+## What I did
+
+-   Used match level data from the Premier League TidyTuesday dataset
+-   Grouped by home team and calculated average home goals
+
+```{r echo = FALSE}
+library(tidyverse)
+library(tidytuesdayR)
+
+soccer <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2023/2023-04-04/soccer21-22.csv')
+
+team_goals <- soccer |>
+  group_by(HomeTeam) |>
+  summarise(avg_goals = mean(FTHG, na.rm = TRUE))
+
+ggplot(team_goals, aes(x = HomeTeam, y = avg_goals)) +
+  geom_col(fill = "blue") +
+  labs(
+    title = "Average Home Goals per Match by Team (2021–22)",
+    x = "Team",
+    y = "Average Goals",
+    caption = "Source: TidyTuesday 2023-04-04, Premier League 2021–22"
+  ) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+------------------------------------------------------------------------
+
+## Premier League Takeaways
+
+-   Manchester City and Liverpool had the most average home goals per match
+-   Simple summaries already tell a useful story about performance
+-   The same approach could be reused for any league or season
+
+# Olympics Data Visualization
+
+------------------------------------------------------------------------
+
+## Question
+
+-   How do medal counts change over the years and what factors may affect this?
+
+------------------------------------------------------------------------
+
+## What I did
+
+-   Used Olympic medal data from the Olympics TidyTuesday dataset
+-   Wrangled the data to see how the total number of medals changed over time
+-   Created a plot to spot long term trends and interruptions in the Games
+
+------------------------------------------------------------------------
+
+## Olympic Trend Plot
+
+```{r echo=FALSE}
+library(tidyverse)
+library(tidytuesdayR)
+
+olympics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-08-06/olympics.csv')
+
+medals_by_year <- olympics |>
+  filter(!is.na(medal)) |>
+  group_by(year) |>
+  summarise(n_medals = n())
+  
+ggplot(medals_by_year, aes(x = year, y = n_medals)) +
+  geom_col(fill = "blue") +
+  labs(
+    title = "Number of Recorded Medals by Year",
+    x = "Olympic Year",
+    y = "Medal Count",
+    caption = "Source: TidyTuesday 2024-08-06, Kaggle 120 Years of Olympic History"
+  )
+```
+
+------------------------------------------------------------------------
+
+## Olympics Takeaways
+
+-   The overall trend climbs upward
+-   Growth tied to bigger programs, more events, and wider participation across countries
+    -   More opportunities, especially in women's competitions adds to the rise
+-   Dips / no data lines up with major world events / interruptions
+-   Gives good sense of how the Games have scaled and evolved
+
+
+# Kidz Bop Censored Lyrics Analysis
+
+
+## What Kidz Bop Censors Most
+
+-   Used the Kidz Bop censored-lyrics dataset from The Pudding to understand what kinds of content get changed most often
+
+```{r echo=FALSE}
+kb <- read_csv("https://raw.githubusercontent.com/the-pudding/data/master/kidz-bop/KB_censored-lyrics.csv")
+
+kb_lines <- kb |> # collapsing to one row per unique ogLyric line
+distinct(ogArtist, songName, ogLyric, .keep_all = TRUE)
+
+category_counts <- kb |>
+  count(category)
+
+top8 <- head(category_counts, 8) 
+
+ggplot(top8, aes(x = reorder(category, n), y = n)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "What Kidz Bop censors most",
+    subtitle = "Top categories in the censored-lyrics dataset",
+    x = "Category",
+    y = "Censored instances"
+  ) +
+  theme_minimal()
+```
+
+-   Reflects the effort to keep songs upbeat and accessible for younger listeners
+
+------------------------------------------------------------------------
+
+## Relationship Themes Over Time
+
+-   Looked for lyrics containing relationship-related words, such as love, kiss, partner, girlfriend, boyfriend, and similar terms
+-   Calculated the share of lines each year that included any of those terms
+
+---
+
+## Relationship Themes Plot
+
+```{r echo=FALSE}
+kb <- read_csv("https://raw.githubusercontent.com/the-pudding/data/master/kidz-bop/KB_censored-lyrics.csv")
+
+kb_lower <- kb |>
+  filter(!is.na(year), !is.na(ogLyric))|>
+  mutate(og_lower = str_to_lower(ogLyric))
+
+reg_expression <- "\\b(love|lover|kiss|kissing|baby|girlfriend|boyfriend|girl|boy|wife|husband|ex|partner)\\b"
+
+by_year <- kb_lower |>
+  mutate(has_relationship = str_detect(og_lower, reg_expression)) |>
+  group_by(year) |>
+  summarise(
+    total = n(),
+    relationship = sum(has_relationship, na.rm = TRUE),
+    pct = mean(has_relationship, na.rm = TRUE)) |>
+  filter(total >= 20) |> # helps to stabilize the percentages
+  ungroup()
+
+ggplot(by_year, aes(x = year, y = pct)) +
+  geom_line() +
+  geom_point() +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1))   +
+  labs(
+    title = "Lyrics mentioning relationships over time",
+    subtitle = "Share of original lyrics with partner or family terms (years with 20+ rows)",
+    x = "Year",
+    y = "Percent of lyrics mentioning relationships"
+  ) +
+  theme_minimal()
+```
+
+-   Peak around 2015 match time frame when pop music leaned heavily into romantic themes
+-   Kidz Bop’s edits shift alongside those trends accordingly
+
+
+# SQL Traffic Stop Analysis
+
+
+## What I did
+
+- Used traffic stop data from the Stanford Open Policing Roject
+- Focused on Long Beach (CA), Mesa (AZ), and San Jose (CA)
+- Used SQL to:
+  - Compare pedestrian vs vehicular stops over time
+  - Compare citation rates across race and city
+  
+---
+
+## Traffic and Pedestrian Stops Over Time
+  
+- Unioned the three cities' data in order to group and filter it
+- Counted stops by city-year-type restrictions
+
+```{r echo=FALSE}
+library(tidyverse)
+library(scales)
+library(DBI)
+
+con_traffic <- DBI::dbConnect(
+
+  RMariaDB::MariaDB(),
+
+  dbname = "traffic",
+
+  host = Sys.getenv("TRAFFIC_HOST"),
+
+  user = Sys.getenv("TRAFFIC_USER"),
+
+  password = Sys.getenv("TRAFFIC_PWD")
+
+)
+
+```
+
+```{sql connection=con_traffic, output.var="stops_by_year_type", results="hide", echo=FALSE}
+SELECT
+  city,
+  YEAR(date) AS year,
+  type,
+  COUNT(*) AS n_stops
+FROM (
+
+    SELECT 'Mesa' AS city, date, type
+    FROM az_mesa_2023_01_26
+
+    UNION ALL
+
+    SELECT 'Long Beach' AS city, date, type
+    FROM ca_long_beach_2020_04_01
+
+    UNION ALL
+
+    SELECT 'San Jose' AS city, date, type
+    FROM ca_san_jose_2020_04_01
+
+) AS all_stops
+WHERE
+    date IS NOT NULL
+    AND YEAR(date) >= 2014
+    AND YEAR(date) <= 2016
+    AND type IN ('vehicular', 'pedestrian')
+GROUP BY
+    city, year, type
+ORDER BY
+    city, year, type;
+```
+
+```{r, echo=FALSE}
+ggplot(stops_by_year_type |>
+         mutate(year = as.integer(year), n_stops = as.numeric(n_stops)), 
+       aes(x = year, y = n_stops, color = type)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(~ city) +
+  scale_x_continuous(breaks = 2014:2016) +
+  scale_y_continuous(labels = comma) +
+  labs(
+    title = "Traffic and Pedestrian Stops Over Time",
+    x = "Year",
+    y = "Number of stops",
+    color = "Stop type"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+  axis.text.x = element_text(angle = 45, hjust = 1),
+  panel.grid.minor = element_blank()
+  )
+```
+
+---
+
+## What We Can Take From This
+
+- Vehicular stops dominate the totals in every city, level differs
+- Trends are different
+  - Each department operates under its own patterns and volumes of activity
+
+---
+
+## Citation Rates by Race Across Cities
+
+- Used same three city tables: Long Beach, Mesa, and San Jose
+- Restricted to years 2014-2016 
+- Wrangled data to compute citation rate as citations divided by total stops
+- Question: do the citation rates mainly reflect differences across race, or differences in how each city records stop outcomes?
+
+---
+
+## Citation Rates Plot
+
+```{r echo=FALSE}
+library(tidyverse)
+library(scales)
+library(DBI)
+
+con_traffic <- DBI::dbConnect(
+
+  RMariaDB::MariaDB(),
+
+  dbname = "traffic",
+
+  host = Sys.getenv("TRAFFIC_HOST"),
+
+  user = Sys.getenv("TRAFFIC_USER"),
+
+  password = Sys.getenv("TRAFFIC_PWD")
+
+)
+
+```
+
+```{sql connection=con_traffic, output.var="citation_rates", results="hide", echo=FALSE}
+SELECT
+  city,
+  subject_race,
+  COUNT(*) AS total_stops,
+  SUM(CASE WHEN citation_issued > 0 THEN 1 ELSE 0 END) AS citations,
+  SUM(CASE WHEN citation_issued > 0 THEN 1 ELSE 0 END) / COUNT(*) AS citation_rate
+FROM (
+
+    SELECT 'Long Beach' AS city, date, subject_race, citation_issued
+    FROM ca_long_beach_2020_04_01
+
+    UNION ALL
+
+    SELECT 'Mesa' AS city, date, subject_race, citation_issued
+    FROM az_mesa_2023_01_26
+
+    UNION ALL
+
+    SELECT 'San Jose' AS city, date, subject_race, citation_issued
+    FROM ca_san_jose_2020_04_01
+
+) AS all_stops
+WHERE
+    date IS NOT NULL
+    AND citation_issued IS NOT NULL
+    AND YEAR(date) >= 2014
+    AND YEAR(date) <= 2016
+    AND subject_race IN (
+        'white',
+        'black',
+        'hispanic',
+        'asian/pacific islander',
+        'other/unknown'
+    )
+GROUP BY
+    city, subject_race
+HAVING
+    COUNT(*) >= 50
+ORDER BY
+    city, citation_rate DESC;
+```
+
+```{r, echo=FALSE}
+ggplot(citation_rates, aes(x = subject_race, y = citation_rate, fill = city)) +
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = percent_format()) +
+  labs(
+    title = "Citation Rates by Race Across Cities (2014–2016)",
+    x = "Subject race",
+    y = "Citation rate",
+    fill = "City"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid.minor = element_blank()
+  )
+```
+- Compares citation rates by race for Long Beach, Mesa, and San Jose between 2014 and 2016
+```{r, echo=FALSE}
+DBI::dbDisconnect(con_traffic)
+```
+---
+
+## What the Patterns Suggest
+- Can potentially conclude that the datasets for Long Beach and Mesa may only include stops that led to a citation, or that non-citation outcomes were not consistently recorded or not recorded at all
+- San Jose has much lower citation rates at around a quarter of stops
+  - Citation rates are driven not only by variation across cities, but also by differences in how the underlying agencies record their stops
+  
+
+## Final Takeaways
+- Small, focused analyses can reveal clear differences across cities and policing practices
+- Public datasets like these make it possible to spot patterns that would otherwise stay hidden
+- Simple analysis and data visualization can provide meaningful insights
+
+
+## References
+
+- Premier League
+  - Dataset page: [TidyTuesday: Premier League Match Data     2023-04-04](https://github.com/rfordatascience/tidytuesday/tree/main/data/2023/2023-04-04)
+  - Original source: [Official Premier League Statistics](https://www.premierleague.com/stats)
+
+- Olympics
+  - Dataset page: [TidyTuesday: Olympics 2024-08-06](https://github.com/rfordatascience/tidytuesday/tree/main/data/2024/2024-08-06)
+  - Original source: [Sports-Reference – Olympic History Project](https://www.sports-reference.com/olympics/)
+
+- Kidz Bop
+  - Dataset page: [The Pudding – Kidz Bop Data](https://github.com/the-pudding/data/tree/master/kidz-bop)
+  - Original source: [Kidz Bop Censored Lyrics Dataset](https://raw.githubusercontent.com/the-pudding/data/master/kidz-bop/KB_censored-lyrics.csv)
+
+- Traffic Stops
+  - Stanford Open Policing Project. [Traffic Stop Data](https://openpolicing.stanford.edu/data/)
+
+- Research Paper
+  - Pierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al. 2020.  
+  “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” *Nature Human Behaviour*.

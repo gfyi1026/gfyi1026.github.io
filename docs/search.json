@@ -88,7 +88,7 @@
     "href": "project5.html#references",
     "title": "SQL Analysis of Traffic Stop Data",
     "section": "References",
-    "text": "References\nPierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al. 2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10."
+    "text": "References\nPierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al. 2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10. Stanford Open Policing Project. “Traffic Stop Data.” https://openpolicing.stanford.edu/data/"
   },
   {
     "objectID": "project4.html",
@@ -182,31 +182,136 @@
     "text": "README pdf\nYou can view the full README here:\nOpen the TeamSync README (pdf)"
   },
   {
-    "objectID": "final_presentation.html#overview",
-    "href": "final_presentation.html#overview",
+    "objectID": "final_presentation.html#my-data-science-portfolio",
+    "href": "final_presentation.html#my-data-science-portfolio",
     "title": "Website Overview Presentation",
-    "section": "Overview",
-    "text": "Overview\nYour intro here"
+    "section": "My Data Science Portfolio",
+    "text": "My Data Science Portfolio\n\nThis presentation walks through the website I’ve built this semester\nMain goal is to be a single place to view several data projects\nI will briefly go over:\n\nPremier League Data Visualization\nOlympics Data Visualization\nKidz Bop Censored Lyrics Analysis\nSQL Traffic Stop Analysis"
   },
   {
-    "objectID": "final_presentation.html#project-updates",
-    "href": "final_presentation.html#project-updates",
+    "objectID": "final_presentation.html#question",
+    "href": "final_presentation.html#question",
     "title": "Website Overview Presentation",
-    "section": "Project Updates",
-    "text": "Project Updates\nExplain the fixes you made"
+    "section": "Question",
+    "text": "Question\n\nHow do teams differ in average goals scored at home in the 2021-22 season?"
   },
   {
-    "objectID": "final_presentation.html#example-visualization",
-    "href": "final_presentation.html#example-visualization",
+    "objectID": "final_presentation.html#what-i-did",
+    "href": "final_presentation.html#what-i-did",
     "title": "Website Overview Presentation",
-    "section": "Example Visualization",
-    "text": "Example Visualization\nAdd a plot or screenshot"
+    "section": "What I did",
+    "text": "What I did\n\nUsed match level data from the Premier League TidyTuesday dataset\nGrouped by home team and calculated average home goals"
   },
   {
-    "objectID": "final_presentation.html#final-thoughts",
-    "href": "final_presentation.html#final-thoughts",
+    "objectID": "final_presentation.html#premier-league-takeaways",
+    "href": "final_presentation.html#premier-league-takeaways",
     "title": "Website Overview Presentation",
-    "section": "Final Thoughts",
-    "text": "Final Thoughts\nWrap up"
+    "section": "Premier League Takeaways",
+    "text": "Premier League Takeaways\n\nManchester City and Liverpool had the most average home goals per match\nSimple summaries already tell a useful story about performance\nThe same approach could be reused for any league or season"
+  },
+  {
+    "objectID": "final_presentation.html#question-1",
+    "href": "final_presentation.html#question-1",
+    "title": "Website Overview Presentation",
+    "section": "Question",
+    "text": "Question\n\nHow do medal counts change over the years and what factors may affect this?"
+  },
+  {
+    "objectID": "final_presentation.html#what-i-did-1",
+    "href": "final_presentation.html#what-i-did-1",
+    "title": "Website Overview Presentation",
+    "section": "What I did",
+    "text": "What I did\n\nUsed Olympic medal data from the Olympics TidyTuesday dataset\nWrangled the data to see how the total number of medals changed over time\nCreated a plot to spot long term trends and interruptions in the Games"
+  },
+  {
+    "objectID": "final_presentation.html#olympic-trend-plot",
+    "href": "final_presentation.html#olympic-trend-plot",
+    "title": "Website Overview Presentation",
+    "section": "Olympic Trend Plot",
+    "text": "Olympic Trend Plot"
+  },
+  {
+    "objectID": "final_presentation.html#olympics-takeaways",
+    "href": "final_presentation.html#olympics-takeaways",
+    "title": "Website Overview Presentation",
+    "section": "Olympics Takeaways",
+    "text": "Olympics Takeaways\n\nThe overall trend climbs upward\nGrowth tied to bigger programs, more events, and wider participation across countries\n\nMore opportunities, especially in women’s competitions adds to the rise\n\nDips / no data lines up with major world events / interruptions\nGives good sense of how the Games have scaled and evolved"
+  },
+  {
+    "objectID": "final_presentation.html#what-kidz-bop-censors-most",
+    "href": "final_presentation.html#what-kidz-bop-censors-most",
+    "title": "Website Overview Presentation",
+    "section": "What Kidz Bop Censors Most",
+    "text": "What Kidz Bop Censors Most\n\nUsed the Kidz Bop censored-lyrics dataset from The Pudding to understand what kinds of content get changed most often\n\n\n\nReflects the effort to keep songs upbeat and accessible for younger listeners"
+  },
+  {
+    "objectID": "final_presentation.html#relationship-themes-over-time",
+    "href": "final_presentation.html#relationship-themes-over-time",
+    "title": "Website Overview Presentation",
+    "section": "Relationship Themes Over Time",
+    "text": "Relationship Themes Over Time\n\nLooked for lyrics containing relationship-related words, such as love, kiss, partner, girlfriend, boyfriend, and similar terms\nCalculated the share of lines each year that included any of those terms"
+  },
+  {
+    "objectID": "final_presentation.html#relationship-themes-plot",
+    "href": "final_presentation.html#relationship-themes-plot",
+    "title": "Website Overview Presentation",
+    "section": "Relationship Themes Plot",
+    "text": "Relationship Themes Plot\n\n\nPeak around 2015 match time frame when pop music leaned heavily into romantic themes\nKidz Bop’s edits shift alongside those trends accordingly"
+  },
+  {
+    "objectID": "final_presentation.html#what-i-did-2",
+    "href": "final_presentation.html#what-i-did-2",
+    "title": "Website Overview Presentation",
+    "section": "What I did",
+    "text": "What I did\n\nUsed traffic stop data from the Stanford Open Policing Roject\nFocused on Long Beach (CA), Mesa (AZ), and San Jose (CA)\nUsed SQL to:\n\nCompare pedestrian vs vehicular stops over time\nCompare citation rates across race and city"
+  },
+  {
+    "objectID": "final_presentation.html#traffic-and-pedestrian-stops-over-time",
+    "href": "final_presentation.html#traffic-and-pedestrian-stops-over-time",
+    "title": "Website Overview Presentation",
+    "section": "Traffic and Pedestrian Stops Over Time",
+    "text": "Traffic and Pedestrian Stops Over Time\n\nUnioned the three cities’ data in order to group and filter it\nCounted stops by city-year-type restrictions"
+  },
+  {
+    "objectID": "final_presentation.html#what-we-can-take-from-this",
+    "href": "final_presentation.html#what-we-can-take-from-this",
+    "title": "Website Overview Presentation",
+    "section": "What We Can Take From This",
+    "text": "What We Can Take From This\n\nVehicular stops dominate the totals in every city, level differs\nTrends are different\n\nEach department operates under its own patterns and volumes of activity"
+  },
+  {
+    "objectID": "final_presentation.html#citation-rates-by-race-across-cities",
+    "href": "final_presentation.html#citation-rates-by-race-across-cities",
+    "title": "Website Overview Presentation",
+    "section": "Citation Rates by Race Across Cities",
+    "text": "Citation Rates by Race Across Cities\n\nUsed same three city tables: Long Beach, Mesa, and San Jose\nRestricted to years 2014-2016\nWrangled data to compute citation rate as citations divided by total stops\nQuestion: do the citation rates mainly reflect differences across race, or differences in how each city records stop outcomes?"
+  },
+  {
+    "objectID": "final_presentation.html#citation-rates-plot",
+    "href": "final_presentation.html#citation-rates-plot",
+    "title": "Website Overview Presentation",
+    "section": "Citation Rates Plot",
+    "text": "Citation Rates Plot\n\n\nCompares citation rates by race for Long Beach, Mesa, and San Jose between 2014 and 2016"
+  },
+  {
+    "objectID": "final_presentation.html#what-the-patterns-suggest",
+    "href": "final_presentation.html#what-the-patterns-suggest",
+    "title": "Website Overview Presentation",
+    "section": "What the Patterns Suggest",
+    "text": "What the Patterns Suggest\n\nCan potentially conclude that the datasets for Long Beach and Mesa may only include stops that led to a citation, or that non-citation outcomes were not consistently recorded or not recorded at all\nSan Jose has much lower citation rates at around a quarter of stops\n\nCitation rates are driven not only by variation across cities, but also by differences in how the underlying agencies record their stops"
+  },
+  {
+    "objectID": "final_presentation.html#final-takeaways",
+    "href": "final_presentation.html#final-takeaways",
+    "title": "Website Overview Presentation",
+    "section": "Final Takeaways",
+    "text": "Final Takeaways\n\nSmall, focused analyses can reveal clear differences across cities and policing practices\nPublic datasets like these make it possible to spot patterns that would otherwise stay hidden\nSimple analysis and data visualization can provide meaningful insights"
+  },
+  {
+    "objectID": "final_presentation.html#references",
+    "href": "final_presentation.html#references",
+    "title": "Website Overview Presentation",
+    "section": "References",
+    "text": "References\n\nPremier League\n\nDataset page: TidyTuesday: Premier League Match Data 2023-04-04\nOriginal source: Official Premier League Statistics\n\nOlympics\n\nDataset page: TidyTuesday: Olympics 2024-08-06\nOriginal source: Sports-Reference – Olympic History Project\n\nKidz Bop\n\nDataset page: The Pudding – Kidz Bop Data\nOriginal source: Kidz Bop Censored Lyrics Dataset\n\nTraffic Stops\n\nStanford Open Policing Project. Traffic Stop Data\n\nResearch Paper\n\nPierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al. 2020.\n“A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour."
   }
 ]

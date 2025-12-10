@@ -17,11 +17,11 @@ website:
           - href: olympics.qmd
             text: Olympic Athletes and Medals 1896-2016
       - href: kidzbop.qmd
-        text: Kidz Bop Analysis
+        text: Kidz Bop
       - href: project3.qmd
-        text: Simulation Study
+        text: Simulation
       - href: project4.qmd
-        text: Ethics - Data and Power
+        text: COMPAS Ethics
       - href: project5.qmd
         text: SQL Analysis of Traffic Stop Data
       - href: teamsync.qmd
